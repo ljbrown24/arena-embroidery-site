@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="arena Embroidery Inc. is an apparel embellishment lab at 311 Avery Street, Los Angeles.">
+<style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>Arena Embroidery</title>
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/f32.png">
+<link rel="apple-touch-icon" href="icons/f180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700;800&family=Cinzel:wght@400&display=swap">
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #141413;
+  --muted: #9a9893;
+  --thread: #c8321e;
+  --placeholder: #f1efea;
+  --scrim: rgba(12, 12, 11, .9);
+  --font: Futura, "Futura PT", "Futura Std", Jost, "Century Gothic", "Avenir Next", sans-serif;
+  --ui: 12.5px;
+  --track: 0.06em;
+  --bar: 85px;
+  --tile-w: 240px;
+  --tile-h: 300px;
+  --logo-filter: none;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0f0f0e; --fg: #f1f0ec; --muted: #7f7d78; --thread: #e2553c; --placeholder: #1d1c1a; --scrim: rgba(0,0,0,.92); --logo-filter: invert(1); color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0f0f0e; --fg: #f1f0ec; --muted: #7f7d78; --thread: #e2553c; --placeholder: #1d1c1a; --scrim: rgba(0,0,0,.92); --logo-filter: invert(1); color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body {
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: var(--ui);
+  line-height: 1.45;
+  text-transform: uppercase;
+  letter-spacing: var(--track);
+  padding-inline: clamp(16px, 2.4vw, 32px);
+  padding-block: 0;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 1.5px solid var(--thread); outline-offset: 3px; }
+body.locked { overflow: hidden; }
+
+@media (hover: hover) and (pointer: fine) {
+  body.cc, body.cc a, body.cc button, body.cc img { cursor: none; }
+}
+#cur { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; transform: translate(-50%, -50%); opacity: 0; transition: opacity .15s; }
+body.cc #cur { opacity: 1; }
+#cur .dot { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--thread); transition: transform .2s ease; }
+#cur .lab { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); white-space: nowrap; color: var(--fg); background: var(--bg); padding: 2px 5px; }
+#cur .lab:empty { display: none; }
+#cur.big .dot { transform: scale(2.2); }
+#cur.small .dot { transform: scale(.6); }
+#cur.on-dark .lab { color: #f1f0ec; background: #0f0f0e; }
+
+.masthead { display: block; padding-block: clamp(14px, 2vw, 28px) 4px; }
+.masthead img { display: block; width: 100%; height: auto; filter: var(--logo-filter); }
+header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  height: var(--bar);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: clamp(16px, 3vw, 48px);
+  background: var(--bg);
+}
+header { text-transform: lowercase; letter-spacing: .02em; }
+header .brand {
+  display: flex; align-items: center; justify-content: space-between; gap: .5em;
+  min-width: 0; overflow: visible; padding-block: .2em;
+  font-weight: 800;
+  font-size: 40px;   letter-spacing: -.035em;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+}
+body.collapsed header .brand { opacity: 1; transform: none; pointer-events: auto; }
+header .brand .ch { display: inline-block; transform: translateY(var(--y)) rotate(var(--r)) skewX(-8deg); }
+header .brand .sp { display: inline-block; width: .28em; }
+header .brand .rep { display: inline-flex; flex: none; }
+@media (max-width: 640px) {
+  header .brand { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; padding-block: 0; line-height: .98; }
+}
+.navstack { display: grid; justify-items: end; gap: 3px; text-align: right; }
+.theme { display: flex; gap: 4px; color: var(--muted); }
+.theme button { color: var(--muted); }
+.theme button[aria-pressed="true"] { color: var(--fg); }
+.theme button:hover { color: var(--fg); }
+.toggle { display: flex; gap: 4px; color: var(--muted); }
+.toggle a[aria-current="true"], header .right a[aria-current="true"] { color: var(--fg); }
+.navstack .right a { color: var(--muted); }
+header a:hover { color: var(--fg); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--tile-w), 100%), var(--tile-w)));
+  justify-content: center;
+  gap: 5px;
+  padding-block: 24px 96px;
+}
+.tile { display: block; width: 100%; max-width: 100%; transition: opacity .25s ease; }
+.tile .ph { width: 100%; height: var(--tile-h); background: var(--placeholder); overflow: hidden; }
+.tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tile .tlabel { display: none; }
+@media (hover: none) { .tile .tlabel { display: flex; justify-content: space-between; gap: 8px; margin-top: 5px; } }
+.tile .tlabel span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+.grid.dim .tile { opacity: .18; }
+.grid.dim .tile.on { opacity: 1; }
+
+.slides { display: grid; gap: clamp(40px, 6vw, 96px); padding-block: 24px 120px; }
+.slide { margin: 0; }
+.slide .ph { width: 100%; background: var(--placeholder); }
+.slide img { display: block; width: 100%; height: auto; }
+.slide figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 10px; }
+.slide figcaption span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.box {
+  position: fixed; inset: 0; z-index: 50;
+  background: #000;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease;
+}
+.box.open { opacity: 1; pointer-events: auto; }
+.box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.box .close, .box .count {
+  position: absolute; z-index: 2;
+  color: #fff; mix-blend-mode: difference;
+  text-transform: lowercase;
+}
+.box .close { top: calc(18px + env(safe-area-inset-top, 0px)); right: clamp(16px, 2.4vw, 32px); }
+.box .count { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); right: clamp(16px, 2.4vw, 32px); font-variant-numeric: tabular-nums; }
+
+.info {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 48px clamp(16px, 2.4vw, 32px);
+  padding-block: clamp(24px, 4vw, 64px) 96px;
+}
+.info .hero { grid-column: 9 / 13; grid-row: 1 / 3; margin: 0; }
+.info .hero img { width: 100%; display: block; }
+.info .lede { grid-column: 1 / 8; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: .01em; font-weight: 400; margin: 0; text-wrap: balance; }
+.info .col { min-width: 0; }
+.info .c1 { grid-column: 1 / 5; }
+.info .c2 { grid-column: 5 / 9; }
+.info .c3 { grid-column: 1 / 5; }
+.info h2 { font-size: var(--ui); font-weight: 400; color: var(--muted); margin: 0 0 12px; }
+.info p { text-transform: none; letter-spacing: .005em; font-size: 15px; line-height: 1.6; margin: 0 0 14px; max-width: 58ch; }
+.info ul { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 3px; }
+.info a { border-bottom: 1px solid var(--muted); }
+.info a:hover { color: var(--thread); border-color: var(--thread); }
+.services button { color: var(--muted); text-align: left; }
+.services button[aria-pressed="true"], .services button:hover { color: var(--fg); }
+.services button[aria-pressed="true"]::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--thread); margin-right: 8px; vertical-align: 1px; }
+.svc-text { text-transform: none; }
+.copyline { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.copyline code { font-family: var(--font); user-select: all; text-transform: none; }
+.copyline button { color: var(--muted); }
+.copyline button:hover { color: var(--thread); }
+
+@media (max-width: 760px) {
+  :root { --tile-w: 160px; --tile-h: 200px; }
+
+  .box .meta { grid-template-columns: 1fr auto; }
+  .box .meta .about { grid-column: 1 / -1; justify-self: start; text-align: left; }
+  .info .hero, .info .lede, .info .c1, .info .c2, .info .c3 { grid-column: 1 / -1; }
+}
+@media (max-width: 380px) { :root { --tile-w: 100%; --tile-h: 360px; } }
+#intro { position: fixed; inset: 0; z-index: 200; background: #000; transition: opacity .5s ease; text-transform: none; letter-spacing: 0; }
+#intro.leaving { opacity: 0; pointer-events: none; }
+#intro .cover { position: fixed; inset: 0; background: #000; z-index: 10; display: flex; align-items: center; justify-content: center; transition: opacity .6s ease; }
+#intro .cover.hidden { opacity: 0; pointer-events: none; }
+#intro .loader { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+#intro .loader-ring { width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.15); border-top-color: rgba(255,255,255,.7); border-radius: 50%; animation: intro-spin 1.2s linear infinite; }
+#intro .loader-text { font-family: 'Cinzel', serif; font-size: .6rem; letter-spacing: .5em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+@keyframes intro-spin { to { transform: rotate(360deg); } }
+#intro .vbg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+#intro .vbg video { width: calc(100% + 8px); height: calc(100% + 8px); object-fit: cover; margin-top: -4px; margin-left: -4px; display: block; }
+#intro .content { position: fixed; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; color: #fff; padding: 4rem 2rem; }
+#intro .logo { font-family: 'Cinzel', serif; font-size: clamp(2rem, 6vw, 5rem); font-weight: 400; letter-spacing: .2em; text-transform: uppercase; display: none; margin: 0; }
+@media (max-width: 768px) {
+  #intro .vbg video { object-fit: contain; margin-top: 0; height: 100%; }
+  #intro .logo { display: block; position: absolute; top: calc((100vh - 56.25vw) / 4); left: 50%; transform: translate(-50%, -50%); width: 90%; font-size: clamp(1.6rem, 9vw, 3rem); }
+}
+@media (prefers-reduced-motion: reduce) { #intro .loader-ring { animation-duration: 3s; } }
+
+.credit { padding-block: 32px 18px; font-size: 9px; letter-spacing: .04em; text-transform: lowercase; color: var(--muted); text-align: center; }
+.credit a:hover { color: var(--fg); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<div id="cur" aria-hidden="true"><span class="dot"></span><span class="lab"></span></div>
+
+<div id="intro" hidden role="button" tabindex="0" aria-label="Enter Arena Embroidery">
+  <div class="cover" id="intro-cover"></div>
+  <div class="vbg"><video id="intro-video" muted playsinline autoplay preload="auto"><source src="intro/intro.webm" type="video/webm"><source src="intro/intro.mp4" type="video/mp4"></video></div>
+  <div class="content"><h1 class="logo">Arena Embroidery</h1></div>
+</div>
+<script>
+(() => {
+  const KEY = 'arena-intro-seen';
+  let seen = false;
+  try { seen = localStorage.getItem(KEY) === '1'; } catch (e) { try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e2) {} }
+  if (seen) { document.getElementById('intro').remove(); return; }
+  try { localStorage.setItem(KEY, '1'); } catch (e) { try { sessionStorage.setItem(KEY, '1'); } catch (e2) {} }
+  const intro = document.getElementById('intro'), cover = document.getElementById('intro-cover'), video = document.getElementById('intro-video');
+  intro.hidden = false; document.body.classList.add('locked');
+  let done = false;
+  const enter = () => {
+    if (done) return; done = true;
+    intro.classList.add('leaving'); document.body.classList.remove('locked');
+    setTimeout(() => { video.pause(); intro.remove(); }, 500);
+  };
+  let started = true;
+  video.addEventListener('playing', () => cover.classList.add('hidden'));
+  const tryPlay = () => { const p = video.play(); if (p && p.catch) p.catch(() => {}); };
+  tryPlay();
+  const bail = () => { if (!done && (video.paused || video.currentTime === 0)) enter(); };
+  video.addEventListener('error', () => setTimeout(bail, 300), true);
+  [...video.querySelectorAll('source')].pop().addEventListener('error', () => setTimeout(bail, 300));
+  setTimeout(bail, 3000);
+  video.addEventListener('ended', () => setTimeout(enter, 150));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && started && !done) { const p = video.play(); if (p && p.catch) p.catch(() => {}); } });
+  setTimeout(enter, 40000);   intro.addEventListener('click', enter);
+  addEventListener('keydown', e => { if (!done && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) { e.preventDefault(); enter(); } });
+  intro.focus({ preventScroll: true });
+})();
+</script>
+
+<a class="masthead" id="masthead" href="#index" aria-label="Arena Embroidery, overview"><img src="photos/header.png" width="1549" height="364" alt="arena embroidery"></a>
+
+<header>
+  <a class="brand" href="#index" tabindex="-1" aria-label="arena embroidery" id="brand">arena embroidery</a>
+  <div class="navstack">
+    <div class="right"><a href="#information" id="t-info">information</a></div>
+    <nav class="toggle" aria-label="View">
+      <a href="#index" id="t-overview">overview</a><span>/</span><a href="#slides" id="t-slides">slides</a>
+    </nav>
+    <div class="theme" role="group" aria-label="Color mode">
+      <button id="m-light" aria-pressed="false">light</button><span>/</span><button id="m-dark" aria-pressed="false">dark</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="v-index"><div class="grid" id="grid"></div></section>
+  <section id="v-slides" hidden><div class="slides" id="slides"></div></section>
+  <section id="v-info" hidden>
+    <div class="info">
+      <figure class="hero"><img src="photos/studio-1.jpg" alt="Arena Embroidery table at a pop-up, with patches laid out"></figure>
+      <p class="lede">arena Embroidery Inc. is an apparel embellishment lab founded in 2018, now at 311 Avery Street in Los Angeles. We love a challenge.</p>
+      <div class="col c1">
+        <h2>Rocco Arena</h2>
+        <p>Rocco grew up in Philadelphia and studied film at New York University. In Los Angeles he set up the West Coast arm of Nike Sportswear’s bespoke Destroyer program, designing and stitching varsity jackets. He took over his first machine from childhood friend Alex Dondero of LQQK Studio in 2016 and founded Arena in 2018.</p>
+        <p>He still writes the stitch files himself. The studio works across sampling, one-offs and production for artists, teams and brands including Drake, the Toronto Raptors, the Philadelphia 76ers, Supreme and Bad Bunny.</p>
+      </div>
+      <div class="col c2 services">
+        <h2>Services</h2>
+        <ul id="svc"></ul>
+        <p class="svc-text" id="svc-text"></p>
+      </div>
+      <div class="col c3">
+        <h2>Studio</h2>
+        <ul><li>311 Avery Street</li><li>Los Angeles, CA</li></ul>
+        <h2>Contact</h2>
+        <ul>
+          <li class="copyline"><code>info@arena-embroidery.nyc</code><button data-copy="info@arena-embroidery.nyc">Copy</button></li>
+          <li><a href="https://www.instagram.com/arena_embroidery/" target="_blank" rel="noopener">Instagram ↗</a></li>
+          <li><a href="https://arena-embroidery.myshopify.com" target="_blank" rel="noopener">Shop ↗</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="credit">site by <a href="https://www.intents-purposes.com" target="_blank" rel="noopener">www.intents-purposes.com</a></footer>
+
+<div class="box" id="box" role="dialog" aria-modal="true" aria-label="Full-screen image" aria-hidden="true">
+  <img id="box-img" alt="">
+  <button class="close" id="box-close">close</button>
+  <span class="count" id="box-count"></span>
+</div>
+
+<script>
+(() => {
+const PROJECTS = [{"id": "phila", "name": "Phila Unite", "text": "Caps for Philadelphia: script lettering wrapped in a satin-stitched serpent, cartoon side hits and star crowns, run on the studio’s multi-head machines.", "plates": [{"src": "photos/phila-1.jpg", "w": 1172, "h": 1172}, {"src": "photos/phila-2.jpg", "w": 1500, "h": 844}, {"src": "photos/phila-3.jpg", "w": 1500, "h": 844}, {"src": "photos/phila-4.jpg", "w": 1080, "h": 1080}, {"src": "photos/phila-5.jpg", "w": 1500, "h": 1000}]}, {"id": "nike", "name": "Nike", "text": "Chenille swooshes, a chenille tiger biting a swoosh, a Nike quilt panel scattered with tonal swooshes, and a KAWS strawberry character on a Nike sweatshirt.", "plates": [{"src": "photos/nike-1.jpg", "w": 1066, "h": 1066}, {"src": "photos/nike-2.jpg", "w": 1500, "h": 844}, {"src": "photos/nike-3.jpg", "w": 1500, "h": 844}, {"src": "photos/nike-4.jpg", "w": 1080, "h": 1080}]}, {"id": "stars", "name": "Stars Panel", "text": "A full navy panel of shooting stars, from the digitized stitch file to the hoop on the machine.", "plates": [{"src": "photos/stars-1.jpg", "w": 1125, "h": 1500}, {"src": "photos/stars-2.jpg", "w": 1125, "h": 1500}, {"src": "photos/stars-3.jpg", "w": 604, "h": 771}]}, {"id": "bosozoku", "name": "Bōsōzoku", "text": "A black work jacket back in the bōsōzoku tradition: gold kanji, cherry blossoms and a “1000” banner in layered satin stitch.", "plates": [{"src": "photos/bosozoku-1.jpg", "w": 1080, "h": 1080}, {"src": "photos/bosozoku-2.jpg", "w": 1006, "h": 1500}]}, {"id": "octopus", "name": "Octopus", "text": "A blue-ringed octopus patch, shown stitched and as the stitch file on screen. Hundreds of color changes in one piece.", "plates": [{"src": "photos/octopus-1.jpg", "w": 1080, "h": 1080}, {"src": "photos/octopus-2.jpg", "w": 876, "h": 629}]}, {"id": "ovo", "name": "OVO", "text": "Black-and-silver satin lettering with detailed owl-wing fill, set on fluorescent green.", "plates": [{"src": "photos/ovo-1.jpg", "w": 1500, "h": 844}]}, {"id": "supreme", "name": "Supreme", "text": "Multicolor arc lettering in tackle twill appliqué, each letter in a different fabric.", "plates": [{"src": "photos/supreme-1.jpg", "w": 1006, "h": 1500}, {"src": "photos/supreme-2.jpg", "w": 1500, "h": 844}]}, {"id": "caps", "name": "Caps", "text": "Front panels and side hits: Dreamcore, a Yankees cap covered in characters, a Book of Truth camo cap, a Kelly storefront patch and the Arena logo cap.", "plates": [{"src": "photos/caps-1.jpg", "w": 1080, "h": 1080}, {"src": "photos/caps-2.jpg", "w": 1080, "h": 1080}, {"src": "photos/caps-3.jpg", "w": 1125, "h": 1500}, {"src": "photos/caps-4.jpg", "w": 1500, "h": 844}, {"src": "photos/caps-5.jpg", "w": 1080, "h": 1080}, {"src": "photos/caps-6.jpg", "w": 1080, "h": 1080}]}, {"id": "denim", "name": "Denim", "text": "Appliqué and embroidery on denim: a patchwork Evisu gull, red cartoon dogs on light-wash jeans, and a tonal figure pair on raw denim.", "plates": [{"src": "photos/denim-1.jpg", "w": 1500, "h": 844}, {"src": "photos/denim-2.jpg", "w": 1500, "h": 844}, {"src": "photos/denim-3.jpg", "w": 844, "h": 1500}]}, {"id": "patches", "name": "Patches & Chenille", "text": "Chenille, satin and fill-stitch pieces: a globe on a green chenille field, Blue Record lettering, a guitar in a wine glass, and dense texture studies.", "plates": [{"src": "photos/patches-1.jpg", "w": 1500, "h": 844}, {"src": "photos/patches-2.jpg", "w": 1500, "h": 844}, {"src": "photos/patches-3.jpg", "w": 1080, "h": 1080}, {"src": "photos/patches-4.jpg", "w": 1080, "h": 1080}, {"src": "photos/patches-5.jpg", "w": 1500, "h": 844}, {"src": "photos/patches-6.jpg", "w": 500, "h": 500}, {"src": "photos/patches-7.jpg", "w": 500, "h": 500}]}, {"id": "art", "name": "Art", "text": "Work made with artists: thread drawing on canvas, a melting flag, a covered sculpture, a dress of stitched text, the scorpion patch and an op-art sphere.", "plates": [{"src": "photos/art-1.jpg", "w": 1125, "h": 1500}, {"src": "photos/art-2.jpg", "w": 928, "h": 1320}, {"src": "photos/art-3.jpg", "w": 1500, "h": 1000}, {"src": "photos/art-4.jpg", "w": 720, "h": 900}, {"src": "photos/art-5.jpg", "w": 1125, "h": 1500}, {"src": "photos/art-6.jpg", "w": 1080, "h": 1080}, {"src": "photos/art-7.jpg", "w": 1125, "h": 1500}]}, {"id": "studio", "name": "Studio", "text": "The lab at work: a pop-up table, machines mid-run, hoops, garments waiting on the rack and a Reebok upper under the needle.", "plates": [{"src": "photos/studio-1.jpg", "w": 1500, "h": 844}, {"src": "photos/studio-2.jpg", "w": 1500, "h": 844}, {"src": "photos/studio-3.jpg", "w": 1080, "h": 1080}, {"src": "photos/studio-4.jpg", "w": 1006, "h": 1500}, {"src": "photos/studio-5.jpg", "w": 1125, "h": 1500}, {"src": "photos/studio-6.jpg", "w": 1125, "h": 1500}, {"src": "photos/studio-7.jpg", "w": 844, "h": 1500}]}];
+const ALL = [];
+PROJECTS.forEach(p => p.plates.forEach((pl, i) => { pl.project = p; pl.n = i + 1; ALL.push(pl); }));
+
+const woven = []; const maxN = Math.max(...PROJECTS.map(p => p.plates.length));
+for (let i = 0; i < maxN; i++) PROJECTS.forEach(p => p.plates[i] && woven.push(p.plates[i]));
+
+function img(pl, eager) { const i = new Image(); i.src = pl.src; i.alt = 'Arena Embroidery'; i.decoding = 'async'; i.loading = eager ? 'eager' : 'lazy'; i.width = pl.w; i.height = pl.h; return i; }
+
+const grid = document.getElementById('grid');
+woven.forEach((pl, i) => {
+  const a = document.createElement('a');
+  a.className = 'tile'; a.href = `#${pl.project.id}`; a.dataset.project = pl.project.id; a.dataset.i = i;
+  a.setAttribute('aria-label', 'View full screen');
+  const ph = document.createElement('div'); ph.className = 'ph'; ph.appendChild(img(pl, i < 16));
+  a.append(ph);
+  a.addEventListener('click', e => { e.preventDefault(); openBox(woven, i); });
+  grid.appendChild(a);
+});
+const highlight = id => { grid.classList.toggle('dim', !!id); grid.querySelectorAll('.tile').forEach(t => t.classList.toggle('on', t.dataset.project === id)); };
+
+grid.addEventListener('mouseleave', () => highlight(null));
+
+const slides = document.getElementById('slides');
+ALL.forEach((pl, i) => {
+  const f = document.createElement('figure'); f.className = 'slide';
+  const ph = document.createElement('div'); ph.className = 'ph'; ph.style.aspectRatio = `${pl.w}/${pl.h}`;
+  const im = img(pl, i < 2); im.dataset.i = i; ph.appendChild(im);
+  f.append(ph);
+  im.addEventListener('click', () => openBox(ALL, i));
+  slides.appendChild(f);
+});
+
+const box = document.getElementById('box'), bImg = document.getElementById('box-img');
+let bList = [], bPos = 0, lastFocus = null;
+function drawBox() {
+  const pl = bList[bPos];
+  bImg.src = pl.src; bImg.alt = 'Arena Embroidery';
+  document.getElementById('box-count').textContent = `${bPos + 1} / ${bList.length}`;
+  [bList[(bPos + 1) % bList.length], bList[(bPos - 1 + bList.length) % bList.length]].forEach(n => { const i = new Image(); i.src = n.src; });
+}
+function openBox(list, i) {
+  bList = list; bPos = i; drawBox();
+  lastFocus = document.activeElement;
+  box.classList.add('open'); box.setAttribute('aria-hidden', 'false'); document.body.classList.add('locked');
+  try { const r = box.requestFullscreen && box.requestFullscreen({ navigationUI: 'hide' }); if (r && r.catch) r.catch(() => {}); } catch (e) {}
+  document.getElementById('box-close').focus({ preventScroll: true });
+}
+function closeBox() {
+  try { if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); } catch (e) {}
+  box.classList.remove('open'); box.setAttribute('aria-hidden', 'true'); document.body.classList.remove('locked');
+  if (lastFocus) lastFocus.focus({ preventScroll: true });
+}
+const stepBox = d => { bPos = (bPos + d + bList.length) % bList.length; drawBox(); };
+const isOpen = () => box.classList.contains('open');
+document.getElementById('box-close').addEventListener('click', closeBox);
+box.addEventListener('click', e => {
+  if (e.target === bImg) stepBox(e.clientX < innerWidth / 2 ? -1 : 1);
+  else if (!e.target.closest('.close')) closeBox();
+});
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && isOpen()) closeBox(); });
+addEventListener('keydown', e => {
+  if (!isOpen()) return;
+  if (e.key === 'Escape') closeBox();
+  if (e.key === 'ArrowRight') stepBox(1);
+  if (e.key === 'ArrowLeft') stepBox(-1);
+});
+
+(() => {
+  const b = document.getElementById('brand'), t = b.textContent; b.textContent = '';
+  for (let k = 0; k < 3; k++) {
+  const g = document.createElement('span'); g.className = 'rep'; g.setAttribute('aria-hidden', 'true');
+  const R = [-9, 6, -4, 10, -7, 0, 5, -10, 8, -3, 7, -6, 3, -8, 9, -5];
+  const Y = [2, -3, 1, -1, 3, 0, -2, 3, -3, 1, 2, -2, 0, 3, -1, 2];
+  [...t].forEach((c, i) => {
+    const s = document.createElement('span'); s.setAttribute('aria-hidden', 'true');
+    const j = i + k * 5;
+    if (c === ' ') { s.className = 'sp'; }
+    else { s.className = 'ch'; s.textContent = c; s.style.setProperty('--r', R[j % R.length] + 'deg'); s.style.setProperty('--y', Y[j % Y.length] + 'px'); }
+    g.appendChild(s);
+  });
+  b.appendChild(g);
+  }
+})();
+
+const brandEl = document.getElementById('brand');
+function fitBrand() {
+  const base = 40;
+  brandEl.style.fontSize = base + 'px';
+  const reps = [...brandEl.querySelectorAll('.rep')];
+  const avail = brandEl.clientWidth;
+  const stacked = getComputedStyle(brandEl).flexDirection === 'column';
+  let size;
+  if (stacked) {
+    const widest = Math.max(...reps.map(r => r.getBoundingClientRect().width));
+    size = Math.min(base * avail / widest * .97, (85 - 12) / 3 / 1.02);
+  } else {
+    const need = reps.reduce((a, r) => a + r.getBoundingClientRect().width, 0) + base * .5 * (reps.length - 1);
+    size = Math.min(base, base * avail / need * .97, (85 - 16) / 1.35);
+  }
+  size = Math.max(8, size);
+  brandEl.style.fontSize = size.toFixed(2) + 'px';
+}
+fitBrand();
+addEventListener('resize', fitBrand);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBrand);
+
+const root = document.documentElement, sysDark = matchMedia('(prefers-color-scheme: dark)');
+const mLight = document.getElementById('m-light'), mDark = document.getElementById('m-dark');
+function currentMode() { return root.dataset.theme || (sysDark.matches ? 'dark' : 'light'); }
+function paintMode() { const m = currentMode(); mLight.setAttribute('aria-pressed', m === 'light'); mDark.setAttribute('aria-pressed', m === 'dark'); }
+function setMode(m) { root.dataset.theme = m; try { localStorage.setItem('arena-theme', m); } catch (e) {} paintMode(); }
+try { const saved = localStorage.getItem('arena-theme'); if (saved === 'light' || saved === 'dark') root.dataset.theme = saved; } catch (e) {}
+mLight.addEventListener('click', () => setMode('light'));
+mDark.addEventListener('click', () => setMode('dark'));
+sysDark.addEventListener && sysDark.addEventListener('change', paintMode);
+new MutationObserver(paintMode).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+paintMode();
+
+const mast = document.getElementById('masthead');
+new IntersectionObserver(([en]) => document.body.classList.toggle('collapsed', !en.isIntersecting), { rootMargin: `-${85}px 0px 0px 0px` }).observe(mast);
+
+const cur = document.getElementById('cur'), lab = cur.querySelector('.lab');
+if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let tx = 0, ty = 0, x = 0, y = 0;
+  addEventListener('mousemove', e => {
+    tx = e.clientX; ty = e.clientY; document.body.classList.add('cc');
+    const t = e.target; let text = '';
+    cur.classList.remove('big', 'small', 'on-dark');
+    if (t.closest('#intro')) { cur.classList.add('on-dark'); text = 'enter'; }
+    else if (t.closest('.box')) {
+      cur.classList.add('on-dark');
+      if (t === bImg) { text = e.clientX < innerWidth / 2 ? 'previous' : 'next'; cur.classList.add('small'); }
+      else cur.classList.add('big');
+    }
+    else if (t.closest('.tile') || t.matches('.slide img')) cur.classList.add('big');
+    else if (t.closest('a, button')) cur.classList.add('big');
+    if (lab.textContent !== text) lab.textContent = text;
+  });
+  document.addEventListener('mouseleave', () => document.body.classList.remove('cc'));
+  const loop = () => { x += (tx - x) * (still ? 1 : .35); y += (ty - y) * (still ? 1 : .35); cur.style.left = x + 'px'; cur.style.top = y + 'px'; requestAnimationFrame(loop); };
+  loop();
+}
+
+const SERVICES = [
+  ['appliqué', 'Fabric is cut into shapes and fixed to a garment or panel with embroidery. Used for large lettering and numbers, patches and layered fabrics.'],
+  ['art', 'Original graphics drawn in the studio, from a first sketch to a stitch-ready design.'],
+  ['chenille', 'Raised, looped pile stitched in the varsity tradition, for letters, patches and texture.'],
+  ['digitization', 'Artwork translated into a stitch file: every point, angle, stitch type and sequence mapped by hand, then tested.'],
+  ['event / runway', 'On-site and deadline work for shows, launches and live events.'],
+  ['laser', 'Laser cutting for clean appliqué edges and precise shapes.'],
+  ['production', 'Runs from ten pieces to several hundred, held to the approved sample.'],
+  ['sampling / 1-off', 'Prototypes, samples and single garments, where most new work starts.'],
+];
+const svc = document.getElementById('svc'), svcText = document.getElementById('svc-text');
+SERVICES.forEach(([n, d], i) => {
+  const li = document.createElement('li'), b = document.createElement('button');
+  b.textContent = n; b.setAttribute('aria-pressed', i === 0);
+  b.onclick = () => { svc.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); svcText.textContent = d; };
+  li.appendChild(b); svc.appendChild(li);
+});
+svcText.textContent = SERVICES[0][1];
+
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
+  const sel = () => { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const sl = getSelection(); sl.removeAllRanges(); sl.addRange(r); };
+  try { navigator.clipboard.writeText(b.dataset.copy).then(() => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 1400); }, sel); } catch (e) { sel(); }
+}));
+
+function route() {
+  const h = (location.hash || '#index').slice(1);
+  const v = ['slides', 'information'].includes(h) ? h : 'index';
+  document.getElementById('v-index').hidden = v !== 'index';
+  document.getElementById('v-slides').hidden = v !== 'slides';
+  document.getElementById('v-info').hidden = v !== 'information';
+  document.getElementById('t-overview').setAttribute('aria-current', v === 'index');
+  document.getElementById('t-slides').setAttribute('aria-current', v === 'slides');
+  document.getElementById('t-info').setAttribute('aria-current', v === 'information');
+  if (isOpen()) closeBox();
+  highlight(null);
+  window.scrollTo(0, 0);
+  document.title = v === 'index' ? 'Arena Embroidery' : `${v === 'slides' ? 'Slides' : 'Information'} — Arena Embroidery`;
+}
+addEventListener('hashchange', route);
+route();
+})();
+</script>
+
+</body>
+</html>
