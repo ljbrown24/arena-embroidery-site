@@ -123,12 +123,6 @@ header a:hover { color: var(--fg); }
 .grid.dim .tile { opacity: .18; }
 .grid.dim .tile.on { opacity: 1; }
 
-.slides { display: grid; gap: clamp(40px, 6vw, 96px); padding-block: 24px 120px; }
-.slide { margin: 0; }
-.slide .ph { width: 100%; background: var(--placeholder); }
-.slide img { display: block; width: 100%; height: auto; }
-.slide figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 10px; }
-.slide figcaption span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .box {
   position: fixed; inset: 0; z-index: 50;
@@ -256,14 +250,14 @@ body.on-info .masthead { display: none; }
 })();
 </script>
 
-<a class="masthead" id="masthead" href="#index" aria-label="arena Embroidery, overview"><img src="photos/header.png" width="1549" height="364" alt="arena embroidery"></a>
+<a class="masthead" id="masthead" href="#gallery" aria-label="arena Embroidery, gallery"><img src="photos/header.png" width="1549" height="364" alt="arena embroidery"></a>
 
-<a class="brand" href="#index" aria-label="arena embroidery, overview" id="brand">arena embroidery</a>
+<a class="brand" href="#gallery" aria-label="arena embroidery, gallery" id="brand">arena embroidery</a>
 <header>
   <div class="navrow">
   <div class="right"><a href="#information" id="t-info">information</a></div>
   <nav class="toggle" aria-label="View">
-    <a href="#index" id="t-overview">overview</a><span>/</span><a href="#slides" id="t-slides">slides</a>
+    <a href="#gallery" id="t-overview">gallery</a>
   </nav>
   <div class="theme" role="group" aria-label="Color mode">
     <button id="m-light" aria-pressed="false">light</button><span>/</span><button id="m-dark" aria-pressed="false">dark</button>
@@ -273,7 +267,6 @@ body.on-info .masthead { display: none; }
 
 <main>
   <section id="v-index"><div class="grid" id="grid"></div></section>
-  <section id="v-slides" hidden><div class="slides" id="slides"></div></section>
   <section id="v-info" hidden>
     <div class="info">
       <figure class="hero" id="hero" aria-label="arena Embroidery work, cycling"><img class="on" src="photos/phila-1.jpg" alt="arena Embroidery work"><img alt="" aria-hidden="true"></figure>
@@ -353,15 +346,6 @@ function evenGrid() {
 evenGrid();
 addEventListener('resize', evenGrid);
 
-const slides = document.getElementById('slides');
-ALL.forEach((pl, i) => {
-  const f = document.createElement('figure'); f.className = 'slide';
-  const ph = document.createElement('div'); ph.className = 'ph'; ph.style.aspectRatio = `${pl.w}/${pl.h}`;
-  const im = img(pl, i < 2); im.dataset.i = i; ph.appendChild(im);
-  f.append(ph);
-  im.addEventListener('click', () => openBox(ALL, i));
-  slides.appendChild(f);
-});
 
 const box = document.getElementById('box'), bImg = document.getElementById('box-img');
 let bList = [], bPos = 0, lastFocus = null;
@@ -473,7 +457,7 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
       if (t === bImg) { text = e.clientX < innerWidth / 2 ? 'previous' : 'next'; cur.classList.add('small'); }
       else cur.classList.add('big');
     }
-    else if (t.closest('.tile') || t.closest('.hero') || t.matches('.slide img')) cur.classList.add('big');
+    else if (t.closest('.tile') || t.closest('.hero')) cur.classList.add('big');
     else if (t.closest('a, button')) cur.classList.add('big');
     if (lab.textContent !== text) lab.textContent = text;
   });
@@ -511,22 +495,20 @@ document.addEventListener('visibilitychange', heroRun);
 box.addEventListener('transitionend', heroRun);
 
 function route() {
-  const h = (location.hash || '#index').slice(1);
-  const v = ['slides', 'information'].includes(h) ? h : 'index';
+  const h = (location.hash || '#gallery').slice(1);
+  const v = h === 'information' ? 'information' : 'index';
   document.getElementById('v-index').hidden = v !== 'index';
-  document.getElementById('v-slides').hidden = v !== 'slides';
   document.getElementById('v-info').hidden = v !== 'information';
   document.body.classList.toggle('on-info', v === 'information');
   fitInfo();
   document.getElementById('t-overview').setAttribute('aria-current', v === 'index');
-  document.getElementById('t-slides').setAttribute('aria-current', v === 'slides');
   document.getElementById('t-info').setAttribute('aria-current', v === 'information');
   if (isOpen()) closeBox();
   highlight(null);
   window.scrollTo(0, 0);
   evenGrid();
   heroRun();
-  document.title = v === 'index' ? 'arena Embroidery' : `${v === 'slides' ? 'Slides' : 'Information'} — arena Embroidery`;
+  document.title = v === 'index' ? 'arena Embroidery' : 'Information — arena Embroidery';
 }
 addEventListener('hashchange', route);
 route();
