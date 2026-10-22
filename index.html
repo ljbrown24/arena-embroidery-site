@@ -100,7 +100,7 @@ header .navrow {
   font-size: clamp(14px, 3.4vw, 40px); line-height: 1; white-space: nowrap;
 }
 header .right a { color: var(--muted); }
-.theme { display: flex; gap: .25em; color: var(--muted); }
+.theme { display: flex; gap: 0; color: var(--muted); }
 .theme button { color: var(--muted); }
 .theme button[aria-pressed="true"] { color: var(--fg); }
 .theme button:hover { color: var(--fg); }
@@ -140,6 +140,7 @@ header a:hover { color: var(--fg); }
 .box .close { top: calc(18px + env(safe-area-inset-top, 0px)); right: clamp(16px, 2.4vw, 32px); }
 .box .count { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); right: clamp(16px, 2.4vw, 32px); font-variant-numeric: tabular-nums; }
 
+.special { min-height: 50vh; padding-block: 24px 96px; }
 .info {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 48px clamp(16px, 2.4vw, 32px);
@@ -259,6 +260,7 @@ body.on-info .masthead { display: none; }
   <nav class="toggle" aria-label="View">
     <a href="#gallery" id="t-overview">gallery</a>
   </nav>
+  <div class="right"><a href="#special-projects" id="t-special">special-projects</a></div>
   <div class="theme" role="group" aria-label="Color mode">
     <button id="m-light" aria-pressed="false">light</button><span>/</span><button id="m-dark" aria-pressed="false">dark</button>
   </div>
@@ -267,6 +269,7 @@ body.on-info .masthead { display: none; }
 
 <main>
   <section id="v-index"><div class="grid" id="grid"></div></section>
+  <section id="v-special" hidden><div class="special" id="special"></div></section>
   <section id="v-info" hidden>
     <div class="info">
       <figure class="hero" id="hero" aria-label="arena Embroidery work, cycling"><img class="on" src="photos/phila-1.jpg" alt="arena Embroidery work"><img alt="" aria-hidden="true"></figure>
@@ -496,19 +499,21 @@ box.addEventListener('transitionend', heroRun);
 
 function route() {
   const h = (location.hash || '#gallery').slice(1);
-  const v = h === 'information' ? 'information' : 'index';
+  const v = ['information', 'special-projects'].includes(h) ? h : 'index';
   document.getElementById('v-index').hidden = v !== 'index';
+  document.getElementById('v-special').hidden = v !== 'special-projects';
   document.getElementById('v-info').hidden = v !== 'information';
   document.body.classList.toggle('on-info', v === 'information');
   fitInfo();
   document.getElementById('t-overview').setAttribute('aria-current', v === 'index');
   document.getElementById('t-info').setAttribute('aria-current', v === 'information');
+  document.getElementById('t-special').setAttribute('aria-current', v === 'special-projects');
   if (isOpen()) closeBox();
   highlight(null);
   window.scrollTo(0, 0);
   evenGrid();
   heroRun();
-  document.title = v === 'index' ? 'arena Embroidery' : 'Information — arena Embroidery';
+  document.title = v === 'index' ? 'arena Embroidery' : `${v === 'information' ? 'Information' : 'Special projects'} — arena Embroidery`;
 }
 addEventListener('hashchange', route);
 route();
