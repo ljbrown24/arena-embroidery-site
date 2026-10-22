@@ -427,6 +427,7 @@ function alignNav() {
 }
 alignNav();
 addEventListener('resize', alignNav);
+if (window.ResizeObserver) new ResizeObserver(alignNav).observe(document.querySelector('header'));
 
 const mast = document.getElementById('masthead');
 function fitInfo() {
