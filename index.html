@@ -327,6 +327,30 @@ const highlight = id => { grid.classList.toggle('dim', !!id); grid.querySelector
 
 grid.addEventListener('mouseleave', () => highlight(null));
 
+// always end on a full row: pick a column count that divides the number of photos evenly,
+// close to what naturally fits the screen; if none fits, hide the leftovers (keeping the last photo)
+function evenGrid() {
+  const W = document.querySelector('main').clientWidth;
+  if (!W) return;
+  const tiles = [...grid.children], n = tiles.length, g = 5;
+  const tw = getComputedStyle(document.documentElement).getPropertyValue('--tile-w').trim();
+  const t = tw.endsWith('px') ? parseFloat(tw) : W;
+  const natural = Math.max(1, Math.floor((W + g) / (t + g)));
+  let best = 0, bestScore = 0;
+  for (let d = 1; d <= n; d++) {
+    if (n % d) continue;
+    const w = (W - (d - 1) * g) / d;
+    if (w < t * .6 || w > t * 1.8) continue;
+    const score = Math.abs(Math.log(w / t));
+    if (!best || score < bestScore) { best = d; bestScore = score; }
+  }
+  const cols = best || natural, extra = best ? 0 : n % cols;
+  grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+  tiles.forEach((el, i) => { el.hidden = extra > 0 && i >= n - 1 - extra && i < n - 1; });
+}
+evenGrid();
+addEventListener('resize', evenGrid);
+
 const slides = document.getElementById('slides');
 ALL.forEach((pl, i) => {
   const f = document.createElement('figure'); f.className = 'slide';
@@ -498,6 +522,7 @@ function route() {
   if (isOpen()) closeBox();
   highlight(null);
   window.scrollTo(0, 0);
+  evenGrid();
   heroRun();
   document.title = v === 'index' ? 'arena Embroidery' : `${v === 'slides' ? 'Slides' : 'Information'} — arena Embroidery`;
 }
