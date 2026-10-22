@@ -74,37 +74,18 @@ body.cc #cur { opacity: 1; }
 header {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
   height: var(--bar);
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: clamp(16px, 3vw, 48px);
+  display: flex; align-items: center; justify-content: space-between; gap: 1em;
   background: var(--bg);
+  font-size: clamp(14px, 3.4vw, 40px);
+  text-transform: lowercase; letter-spacing: .02em; line-height: 1; white-space: nowrap;
 }
-header { text-transform: lowercase; letter-spacing: .02em; }
-header .brand {
-  display: flex; align-items: center; justify-content: space-between; gap: .5em;
-  min-width: 0; overflow: visible; padding-block: .2em;
-  font-weight: 800;
-  font-size: 40px;   letter-spacing: -.035em;
-  line-height: 1;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity .25s ease, transform .25s ease;
-  pointer-events: none;
-}
-body.collapsed header .brand { opacity: 1; transform: none; pointer-events: auto; }
-header .brand .ch { display: inline-block; transform: translateY(var(--y)) rotate(var(--r)) skewX(-8deg); }
-header .brand .sp { display: inline-block; width: .28em; }
-header .brand .rep { display: inline-flex; flex: none; }
-@media (max-width: 640px) {
-  header .brand { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; padding-block: 0; line-height: .98; }
-}
-.navstack { display: grid; justify-items: end; gap: 3px; text-align: right; }
-.theme { display: flex; gap: 4px; color: var(--muted); }
+header .right a { color: var(--muted); }
+.theme { display: flex; gap: .25em; color: var(--muted); }
 .theme button { color: var(--muted); }
 .theme button[aria-pressed="true"] { color: var(--fg); }
 .theme button:hover { color: var(--fg); }
-.toggle { display: flex; gap: 4px; color: var(--muted); }
+.toggle { display: flex; gap: .25em; color: var(--muted); }
 .toggle a[aria-current="true"], header .right a[aria-current="true"] { color: var(--fg); }
-.navstack .right a { color: var(--muted); }
 header a:hover { color: var(--fg); }
 
 .grid {
@@ -243,15 +224,12 @@ header a:hover { color: var(--fg); }
 <a class="masthead" id="masthead" href="#index" aria-label="arena Embroidery, overview"><img src="photos/header.png" width="1549" height="364" alt="arena embroidery"></a>
 
 <header>
-  <a class="brand" href="#index" tabindex="-1" aria-label="arena embroidery" id="brand">arena embroidery</a>
-  <div class="navstack">
-    <div class="right"><a href="#information" id="t-info">information</a></div>
-    <nav class="toggle" aria-label="View">
-      <a href="#index" id="t-overview">overview</a><span>/</span><a href="#slides" id="t-slides">slides</a>
-    </nav>
-    <div class="theme" role="group" aria-label="Color mode">
-      <button id="m-light" aria-pressed="false">light</button><span>/</span><button id="m-dark" aria-pressed="false">dark</button>
-    </div>
+  <div class="right"><a href="#information" id="t-info">information</a></div>
+  <nav class="toggle" aria-label="View">
+    <a href="#index" id="t-overview">overview</a><span>/</span><a href="#slides" id="t-slides">slides</a>
+  </nav>
+  <div class="theme" role="group" aria-label="Color mode">
+    <button id="m-light" aria-pressed="false">light</button><span>/</span><button id="m-dark" aria-pressed="false">dark</button>
   </div>
 </header>
 
@@ -356,45 +334,6 @@ addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') stepBox(1);
   if (e.key === 'ArrowLeft') stepBox(-1);
 });
-
-(() => {
-  const b = document.getElementById('brand'), t = b.textContent; b.textContent = '';
-  for (let k = 0; k < 3; k++) {
-  const g = document.createElement('span'); g.className = 'rep'; g.setAttribute('aria-hidden', 'true');
-  const R = [-9, 6, -4, 10, -7, 0, 5, -10, 8, -3, 7, -6, 3, -8, 9, -5];
-  const Y = [2, -3, 1, -1, 3, 0, -2, 3, -3, 1, 2, -2, 0, 3, -1, 2];
-  [...t].forEach((c, i) => {
-    const s = document.createElement('span'); s.setAttribute('aria-hidden', 'true');
-    const j = i + k * 5;
-    if (c === ' ') { s.className = 'sp'; }
-    else { s.className = 'ch'; s.textContent = c; s.style.setProperty('--r', R[j % R.length] + 'deg'); s.style.setProperty('--y', Y[j % Y.length] + 'px'); }
-    g.appendChild(s);
-  });
-  b.appendChild(g);
-  }
-})();
-
-const brandEl = document.getElementById('brand');
-function fitBrand() {
-  const base = 40;
-  brandEl.style.fontSize = base + 'px';
-  const reps = [...brandEl.querySelectorAll('.rep')];
-  const avail = brandEl.clientWidth;
-  const stacked = getComputedStyle(brandEl).flexDirection === 'column';
-  let size;
-  if (stacked) {
-    const widest = Math.max(...reps.map(r => r.getBoundingClientRect().width));
-    size = Math.min(base * avail / widest * .97, (85 - 12) / 3 / 1.02);
-  } else {
-    const need = reps.reduce((a, r) => a + r.getBoundingClientRect().width, 0) + base * .5 * (reps.length - 1);
-    size = Math.min(base, base * avail / need * .97, (85 - 16) / 1.35);
-  }
-  size = Math.max(8, size);
-  brandEl.style.fontSize = size.toFixed(2) + 'px';
-}
-fitBrand();
-addEventListener('resize', fitBrand);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBrand);
 
 const root = document.documentElement, sysDark = matchMedia('(prefers-color-scheme: dark)');
 const mLight = document.getElementById('m-light'), mDark = document.getElementById('m-dark');
