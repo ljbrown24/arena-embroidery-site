@@ -171,7 +171,8 @@ header a:hover { color: var(--fg); }
   :root:not([data-theme="light"]) .info a.legacy { color: #8ab4f8; }
   :root:not([data-theme="light"]) .info a.legacy:visited { color: #c58af9; }
 }
-.info a.ig { text-transform: none; }
+.info a.ig { text-transform: none; display: inline-flex; align-items: center; gap: .4em; }
+.info a.ig .ig-logo { width: 1.5em; height: 1.5em; display: block; }
 .copyline { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .copyline code { font-family: var(--font); user-select: all; text-transform: none; }
 .copyline button { color: var(--muted); }
@@ -288,7 +289,7 @@ body.on-info .masthead { display: none; }
         <h2>Contact</h2>
         <ul>
           <li class="copyline"><code>info@arena-embroidery.nyc</code><button data-copy="info@arena-embroidery.nyc">Copy</button></li>
-          <li><a class="ig" href="https://www.instagram.com/arena_embroidery/" target="_blank" rel="noopener">Instagram ↗</a></li>
+          <li><a class="ig" href="https://www.instagram.com/arena_embroidery/" target="_blank" rel="noopener"><img class="ig-logo" src="icons/instagram.png" alt="" width="64" height="64">Instagram ↗</a></li>
         </ul>
       </div>
     </div>
