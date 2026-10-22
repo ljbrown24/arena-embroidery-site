@@ -217,11 +217,6 @@ body.on-info .masthead { display: none; }
 </div>
 <script>
 (() => {
-  const KEY = 'arena-intro-seen';
-  let seen = false;
-  try { seen = localStorage.getItem(KEY) === '1'; } catch (e) { try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e2) {} }
-  if (seen) { document.getElementById('intro').remove(); return; }
-  try { localStorage.setItem(KEY, '1'); } catch (e) { try { sessionStorage.setItem(KEY, '1'); } catch (e2) {} }
   const intro = document.getElementById('intro'), cover = document.getElementById('intro-cover'), video = document.getElementById('intro-video');
   intro.hidden = false; document.body.classList.add('locked');
   let done = false;
