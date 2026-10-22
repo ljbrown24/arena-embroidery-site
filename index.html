@@ -72,7 +72,7 @@ body.cc #cur { opacity: 1; }
 .masthead { display: block; padding-block: clamp(14px, 2vw, 28px) 4px; }
 .masthead img { display: block; width: 100%; height: auto; filter: var(--logo-filter); }
 header {
-  position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--bar)); z-index: 20;
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--brand-h, var(--bar))); z-index: 20;
   display: grid;
   background: var(--bg);
   text-transform: lowercase; letter-spacing: .02em;
@@ -80,14 +80,14 @@ header {
 /* the 3-repeat logo bar: hidden while the big jumbled logo is on screen, pinned to the top once it scrolls away */
 .brand {
   position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 21;
-  height: var(--bar); padding-inline: clamp(16px, 2.4vw, 32px); background: var(--bg);
-  display: flex; align-items: center; justify-content: space-between; gap: .5em;
+  height: var(--brand-h, var(--bar)); padding-inline: clamp(16px, 2.4vw, 32px); background: var(--bg);
+  display: flex; align-items: center; justify-content: space-between; gap: .12em;
   min-width: 0; overflow: visible;
   font-weight: 800; font-size: 40px; letter-spacing: -.035em; line-height: 1; white-space: nowrap; text-transform: lowercase;
   opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s;
 }
 body.collapsed .brand, body.on-info .brand { opacity: 1; visibility: visible; }
-body.on-info { padding-top: var(--bar); }
+body.on-info { padding-top: var(--brand-h, var(--bar)); }
 .brand .ch { display: inline-block; transform: translateY(var(--y)) rotate(var(--r)) skewX(-8deg); }
 .brand .sp { display: inline-block; width: .28em; }
 .brand .rep { display: inline-flex; flex: none; }
@@ -393,15 +393,17 @@ function fitBrand() {
     const widest = Math.max(...reps.map(r => r.getBoundingClientRect().width));
     size = Math.min(base * avail / widest * .97, (85 - 12) / 3 / 1.02);
   } else {
-    const need = reps.reduce((a, r) => a + r.getBoundingClientRect().width, 0) + base * .5 * (reps.length - 1);
-    size = Math.min(base, base * avail / need * .97, (85 - 16) / 1.35);
+    // large, filling the width so the three repeats nearly touch
+    const need = reps.reduce((a, r) => a + r.getBoundingClientRect().width, 0) + base * .12 * (reps.length - 1);
+    size = Math.min(base * avail / need * .985, 140);
   }
   size = Math.max(8, size);
   brandEl.style.fontSize = size.toFixed(2) + 'px';
+  document.documentElement.style.setProperty('--brand-h', (stacked ? 85 : Math.ceil(size * 1.3 + 10)) + 'px');
 }
 fitBrand();
 addEventListener('resize', fitBrand);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBrand);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitBrand(); fitInfo(); });
 
 const root = document.documentElement, sysDark = matchMedia('(prefers-color-scheme: dark)');
 const mLight = document.getElementById('m-light'), mDark = document.getElementById('m-dark');
@@ -429,10 +431,10 @@ addEventListener('resize', alignNav);
 const mast = document.getElementById('masthead');
 function fitInfo() {
   const used = mast.getBoundingClientRect().height + (document.body.classList.contains('on-info') ? brandEl.offsetHeight : 0) + document.querySelector('header').offsetHeight + document.querySelector('.credit').offsetHeight;
-  root.style.setProperty('--info-h', Math.floor(innerHeight - used) + 'px');
+  root.style.setProperty('--info-h', Math.floor(innerHeight - used - 1) + 'px');
 }
 addEventListener('resize', fitInfo);
-new IntersectionObserver(([en]) => document.body.classList.toggle('collapsed', !en.isIntersecting), { rootMargin: `-${85}px 0px 0px 0px` }).observe(mast);
+new IntersectionObserver(([en]) => document.body.classList.toggle('collapsed', !en.isIntersecting), { rootMargin: `-${brandEl.offsetHeight || 85}px 0px 0px 0px` }).observe(mast);
 
 const cur = document.getElementById('cur'), lab = cur.querySelector('.lab');
 if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
