@@ -155,17 +155,12 @@ header a:hover { color: var(--fg); }
 .info .hero img { width: 100%; display: block; }
 .info .lede { grid-column: 1 / 8; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: .01em; font-weight: 400; margin: 0; text-wrap: balance; }
 .info .col { min-width: 0; }
-.info .c2 { grid-column: 1 / 5; }
-.info .c3 { grid-column: 5 / 9; }
+.info .c3 { grid-column: 1 / 5; }
 .info h2 { font-size: var(--ui); font-weight: 400; color: var(--muted); margin: 0 0 12px; }
 .info p { text-transform: none; letter-spacing: .005em; font-size: 15px; line-height: 1.6; margin: 0 0 14px; max-width: 58ch; }
 .info ul { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 3px; }
 .info a { border-bottom: 1px solid var(--muted); }
 .info a:hover { color: var(--thread); border-color: var(--thread); }
-.services button { color: var(--muted); text-align: left; }
-.services button[aria-pressed="true"], .services button:hover { color: var(--fg); }
-.services button[aria-pressed="true"]::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--thread); margin-right: 8px; vertical-align: 1px; }
-.svc-text { text-transform: none; }
 .copyline { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .copyline code { font-family: var(--font); user-select: all; text-transform: none; }
 .copyline button { color: var(--muted); }
@@ -176,7 +171,7 @@ header a:hover { color: var(--fg); }
 
   .box .meta { grid-template-columns: 1fr auto; }
   .box .meta .about { grid-column: 1 / -1; justify-self: start; text-align: left; }
-  .info .hero, .info .lede, .info .c2, .info .c3 { grid-column: 1 / -1; }
+  .info .hero, .info .lede, .info .c3 { grid-column: 1 / -1; }
 }
 @media (max-width: 380px) { :root { --tile-w: 100%; --tile-h: 360px; } }
 #intro { position: fixed; inset: 0; z-index: 200; background: #000; transition: opacity .5s ease; text-transform: none; letter-spacing: 0; }
@@ -267,11 +262,6 @@ header a:hover { color: var(--fg); }
       <figure class="hero"><img src="photos/studio-1.jpg" alt="arena Embroidery table at a pop-up, with patches laid out"></figure>
       <p class="lede">Los Angeles : studio, est. 2025<br>
         New York City : shop, est. 2018</p>
-      <div class="col c2 services">
-        <h2>Services</h2>
-        <ul id="svc"></ul>
-        <p class="svc-text" id="svc-text"></p>
-      </div>
       <div class="col c3">
         <h2>Studio</h2>
         <ul><li><a href="https://www.google.com/maps/search/?api=1&amp;query=311+Avery+Street+Los+Angeles+CA" target="_blank" rel="noopener">311 Avery Street<br>Los Angeles, CA ↗</a></li></ul>
@@ -442,25 +432,6 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
   const loop = () => { x += (tx - x) * (still ? 1 : .35); y += (ty - y) * (still ? 1 : .35); cur.style.left = x + 'px'; cur.style.top = y + 'px'; requestAnimationFrame(loop); };
   loop();
 }
-
-const SERVICES = [
-  ['appliqué', 'Fabric is cut into shapes and fixed to a garment or panel with embroidery. Used for large lettering and numbers, patches and layered fabrics.'],
-  ['art', 'Original graphics drawn in the studio, from a first sketch to a stitch-ready design.'],
-  ['chenille', 'Raised, looped pile stitched in the varsity tradition, for letters, patches and texture.'],
-  ['digitization', 'Artwork translated into a stitch file: every point, angle, stitch type and sequence mapped by hand, then tested.'],
-  ['event / runway', 'On-site and deadline work for shows, launches and live events.'],
-  ['laser', 'Laser cutting for clean appliqué edges and precise shapes.'],
-  ['production', 'Runs from ten pieces to several hundred, held to the approved sample.'],
-  ['sampling / 1-off', 'Prototypes, samples and single garments, where most new work starts.'],
-];
-const svc = document.getElementById('svc'), svcText = document.getElementById('svc-text');
-SERVICES.forEach(([n, d], i) => {
-  const li = document.createElement('li'), b = document.createElement('button');
-  b.textContent = n; b.setAttribute('aria-pressed', i === 0);
-  b.onclick = () => { svc.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); svcText.textContent = d; };
-  li.appendChild(b); svc.appendChild(li);
-});
-svcText.textContent = SERVICES[0][1];
 
 document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
   const sel = () => { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const sl = getSelection(); sl.removeAllRanges(); sl.addRange(r); };
