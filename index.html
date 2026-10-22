@@ -201,11 +201,9 @@ body.on-info .masthead { display: none; }
 @keyframes intro-spin { to { transform: rotate(360deg); } }
 #intro .vbg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
 #intro .vbg video { width: calc(100% + 8px); height: calc(100% + 8px); object-fit: cover; margin-top: -4px; margin-left: -4px; display: block; }
-#intro .content { position: fixed; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; color: #fff; padding: 4rem 2rem; }
-#intro .logo { font-family: 'Cinzel', serif; font-size: clamp(2rem, 6vw, 5rem); font-weight: 400; letter-spacing: .2em; text-transform: uppercase; display: none; margin: 0; }
-@media (max-width: 768px) {
-  #intro .vbg video { object-fit: contain; margin-top: 0; height: 100%; }
-  #intro .logo { display: block; position: absolute; top: calc((100vh - 56.25vw) / 4); left: 50%; transform: translate(-50%, -50%); width: 90%; font-size: clamp(1.6rem, 9vw, 3rem); }
+/* portrait phones: turn the landscape video 90° clockwise so it fills the screen edge to edge */
+@media (max-width: 768px) and (orientation: portrait) {
+  #intro .vbg video { position: absolute; top: 50%; left: 50%; margin: 0; width: calc(100vh + 8px); height: calc(100vw + 8px); width: calc(100dvh + 8px); object-fit: cover; transform: translate(-50%, -50%) rotate(90deg); }
 }
 @media (prefers-reduced-motion: reduce) { #intro .loader-ring { animation-duration: 3s; } }
 
@@ -223,7 +221,6 @@ body.on-info .masthead { display: none; }
 <div id="intro" hidden role="button" tabindex="0" aria-label="Enter arena Embroidery">
   <div class="cover" id="intro-cover"></div>
   <div class="vbg"><video id="intro-video" muted playsinline autoplay preload="auto"><source src="intro/intro.webm" type="video/webm"><source src="intro/intro.mp4" type="video/mp4"></video></div>
-  <div class="content"><h1 class="logo">arena Embroidery</h1></div>
 </div>
 <script>
 (() => {
