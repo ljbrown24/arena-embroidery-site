@@ -155,9 +155,8 @@ header a:hover { color: var(--fg); }
 .info .hero img { width: 100%; display: block; }
 .info .lede { grid-column: 1 / 8; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: .01em; font-weight: 400; margin: 0; text-wrap: balance; }
 .info .col { min-width: 0; }
-.info .c1 { grid-column: 1 / 5; }
-.info .c2 { grid-column: 5 / 9; }
-.info .c3 { grid-column: 1 / 5; }
+.info .c2 { grid-column: 1 / 5; }
+.info .c3 { grid-column: 5 / 9; }
 .info h2 { font-size: var(--ui); font-weight: 400; color: var(--muted); margin: 0 0 12px; }
 .info p { text-transform: none; letter-spacing: .005em; font-size: 15px; line-height: 1.6; margin: 0 0 14px; max-width: 58ch; }
 .info ul { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 3px; }
@@ -177,7 +176,7 @@ header a:hover { color: var(--fg); }
 
   .box .meta { grid-template-columns: 1fr auto; }
   .box .meta .about { grid-column: 1 / -1; justify-self: start; text-align: left; }
-  .info .hero, .info .lede, .info .c1, .info .c2, .info .c3 { grid-column: 1 / -1; }
+  .info .hero, .info .lede, .info .c2, .info .c3 { grid-column: 1 / -1; }
 }
 @media (max-width: 380px) { :root { --tile-w: 100%; --tile-h: 360px; } }
 #intro { position: fixed; inset: 0; z-index: 200; background: #000; transition: opacity .5s ease; text-transform: none; letter-spacing: 0; }
@@ -269,11 +268,6 @@ header a:hover { color: var(--fg); }
       <p class="lede">arena Embroidery, Inc. is an apparel embellishment lab.<br>
         Los Angeles showroom, est. 2025<br>
         New York City studio, est. 2018.</p>
-      <div class="col c1">
-        <h2>Rocco Arena</h2>
-        <p>Rocco grew up in Philadelphia and studied film at New York University. In Los Angeles he set up the West Coast arm of Nike Sportswear’s bespoke Destroyer program, designing and stitching varsity jackets. He took over his first machine from childhood friend Alex Dondero of LQQK Studio in 2016 and founded arena in 2018.</p>
-        <p>He still writes the stitch files himself. The studio works across sampling, one-offs and production for artists, teams and brands including Drake, the Toronto Raptors, the Philadelphia 76ers, Supreme and Bad Bunny.</p>
-      </div>
       <div class="col c2 services">
         <h2>Services</h2>
         <ul id="svc"></ul>
