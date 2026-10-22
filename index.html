@@ -95,7 +95,6 @@ body.on-info { padding-top: var(--brand-h, var(--bar)); }
   .brand { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; line-height: .98; }
 }
 header .navrow {
-  width: var(--grid-w, 100%); justify-self: center;
   display: flex; align-items: center; justify-content: space-between; gap: 1em;
   padding-block: .3em .45em;
   font-size: clamp(14px, 3.4vw, 40px); line-height: 1; white-space: nowrap;
@@ -111,13 +110,12 @@ header a:hover { color: var(--fg); }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(var(--tile-w), 100%), var(--tile-w)));
-  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--tile-w), 100%), 1fr));
   gap: 5px;
   padding-block: 24px 96px;
 }
 .tile { display: block; width: 100%; max-width: 100%; transition: opacity .25s ease; }
-.tile .ph { width: 100%; height: var(--tile-h); background: var(--placeholder); overflow: hidden; }
+.tile .ph { width: 100%; aspect-ratio: 4 / 5; background: var(--placeholder); overflow: hidden; }
 .tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .tile .tlabel { display: none; }
 @media (hover: none) { .tile .tlabel { display: flex; justify-content: space-between; gap: 8px; margin-top: 5px; } }
@@ -416,18 +414,6 @@ mDark.addEventListener('click', () => setMode('dark'));
 sysDark.addEventListener && sysDark.addEventListener('change', paintMode);
 new MutationObserver(paintMode).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 paintMode();
-
-// line the menu up with the edges of the photo grid
-function alignNav() {
-  const W = document.querySelector('header').clientWidth;
-  const tw = getComputedStyle(root).getPropertyValue('--tile-w').trim();
-  let w = W;
-  if (tw.endsWith('px')) { const t = parseFloat(tw), g = 5, n = Math.max(1, Math.floor((W + g) / (t + g))); w = Math.min(W, n * t + (n - 1) * g); }
-  root.style.setProperty('--grid-w', w + 'px');
-}
-alignNav();
-addEventListener('resize', alignNav);
-if (window.ResizeObserver) new ResizeObserver(alignNav).observe(document.querySelector('header'));
 
 const mast = document.getElementById('masthead');
 function fitInfo() {
