@@ -151,9 +151,10 @@ header a:hover { color: var(--fg); }
   gap: 48px clamp(16px, 2.4vw, 32px);
   padding-block: clamp(24px, 4vw, 64px) 96px;
 }
-.info .hero { grid-column: 9 / 13; grid-row: 1 / 3; margin: 0; }
-.info .hero img { width: 100%; display: block; }
-.info .lede { grid-column: 1 / 8; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: .01em; font-weight: 400; margin: 0; text-wrap: balance; }
+.info .hero { grid-column: 7 / 13; grid-row: 1 / 4; align-self: start; margin: 0; position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--placeholder); cursor: pointer; }
+.info .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .35s ease; }
+.info .hero img.on { opacity: 1; }
+.info .lede { grid-column: 1 / 7; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: .01em; font-weight: 400; margin: 0; text-wrap: balance; }
 .info .col { min-width: 0; }
 .info .c3 { grid-column: 1 / 5; }
 .info h2 { font-size: var(--ui); font-weight: 400; color: var(--muted); margin: 0 0 12px; }
@@ -259,7 +260,7 @@ header a:hover { color: var(--fg); }
   <section id="v-slides" hidden><div class="slides" id="slides"></div></section>
   <section id="v-info" hidden>
     <div class="info">
-      <figure class="hero"><img src="photos/studio-1.jpg" alt="arena Embroidery table at a pop-up, with patches laid out"></figure>
+      <figure class="hero" id="hero" aria-label="arena Embroidery work, cycling"><img class="on" src="photos/phila-1.jpg" alt="arena Embroidery work"><img alt="" aria-hidden="true"></figure>
       <p class="lede">Los Angeles : studio, est. 2025<br>
         New York City : shop, est. 2018</p>
       <div class="col c3">
@@ -424,7 +425,7 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
       if (t === bImg) { text = e.clientX < innerWidth / 2 ? 'previous' : 'next'; cur.classList.add('small'); }
       else cur.classList.add('big');
     }
-    else if (t.closest('.tile') || t.matches('.slide img')) cur.classList.add('big');
+    else if (t.closest('.tile') || t.closest('.hero') || t.matches('.slide img')) cur.classList.add('big');
     else if (t.closest('a, button')) cur.classList.add('big');
     if (lab.textContent !== text) lab.textContent = text;
   });
@@ -438,6 +439,29 @@ document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click'
   try { navigator.clipboard.writeText(b.dataset.copy).then(() => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 1400); }, sel); } catch (e) { sel(); }
 }));
 
+const hero = document.getElementById('hero'), hImgs = [...hero.querySelectorAll('img')];
+let hPos = 0, hLayer = 0, hTimer = null;
+function heroTick() {
+  hPos = (hPos + 1) % woven.length;
+  const pl = woven[hPos], next = hImgs[1 - hLayer], cur = hImgs[hLayer];
+  const swap = () => {
+    next.classList.add('on'); next.alt = 'arena Embroidery work'; next.removeAttribute('aria-hidden');
+    cur.classList.remove('on'); cur.alt = ''; cur.setAttribute('aria-hidden', 'true');
+    hLayer = 1 - hLayer;
+    const pre = new Image(); pre.src = woven[(hPos + 1) % woven.length].src;
+  };
+  next.src = pl.src;
+  (next.decode ? next.decode() : Promise.resolve()).then(swap, swap);
+}
+function heroRun() {
+  const on = !document.getElementById('v-info').hidden && !document.hidden && !isOpen();
+  if (on && !hTimer) hTimer = setInterval(heroTick, 1500);
+  if (!on && hTimer) { clearInterval(hTimer); hTimer = null; }
+}
+hero.addEventListener('click', () => { openBox(woven, hPos); heroRun(); });
+document.addEventListener('visibilitychange', heroRun);
+box.addEventListener('transitionend', heroRun);
+
 function route() {
   const h = (location.hash || '#index').slice(1);
   const v = ['slides', 'information'].includes(h) ? h : 'index';
@@ -450,6 +474,7 @@ function route() {
   if (isOpen()) closeBox();
   highlight(null);
   window.scrollTo(0, 0);
+  heroRun();
   document.title = v === 'index' ? 'arena Embroidery' : `${v === 'slides' ? 'Slides' : 'Information'} — arena Embroidery`;
 }
 addEventListener('hashchange', route);
