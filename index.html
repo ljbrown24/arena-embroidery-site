@@ -260,7 +260,8 @@ body.on-info .masthead { display: none; }
   <nav class="toggle" aria-label="View">
     <a href="#gallery" id="t-overview">gallery</a>
   </nav>
-  <div class="right"><a href="#special-projects" id="t-special">special-projects</a></div>
+  <div class="right"><a href="#clients" id="t-clients">clients</a></div>
+  <div class="right"><a href="#projects" id="t-special">projects</a></div>
   <div class="theme" role="group" aria-label="Color mode">
     <button id="m-light" aria-pressed="false">light</button><span>/</span><button id="m-dark" aria-pressed="false">dark</button>
   </div>
@@ -269,6 +270,7 @@ body.on-info .masthead { display: none; }
 
 <main>
   <section id="v-index"><div class="grid" id="grid"></div></section>
+  <section id="v-clients" hidden><div class="special" id="clients"></div></section>
   <section id="v-special" hidden><div class="special" id="special"></div></section>
   <section id="v-info" hidden>
     <div class="info">
@@ -438,6 +440,16 @@ sysDark.addEventListener && sysDark.addEventListener('change', paintMode);
 new MutationObserver(paintMode).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 paintMode();
 
+const navrow = document.querySelector('.navrow');
+function fitNav() {
+  navrow.style.fontSize = '';
+  let f = parseFloat(getComputedStyle(navrow).fontSize);
+  while (navrow.scrollWidth > navrow.clientWidth + 1 && f > 9) { f -= .5; navrow.style.fontSize = f + 'px'; }
+}
+fitNav();
+addEventListener('resize', fitNav);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNav);
+
 const mast = document.getElementById('masthead');
 function fitInfo() {
   const used = mast.getBoundingClientRect().height + (document.body.classList.contains('on-info') ? brandEl.offsetHeight : 0) + document.querySelector('header').offsetHeight + document.querySelector('.credit').offsetHeight;
@@ -499,21 +511,23 @@ box.addEventListener('transitionend', heroRun);
 
 function route() {
   const h = (location.hash || '#gallery').slice(1);
-  const v = ['information', 'special-projects'].includes(h) ? h : 'index';
+  const v = h === 'special-projects' ? 'projects' : ['information', 'clients', 'projects'].includes(h) ? h : 'index';
   document.getElementById('v-index').hidden = v !== 'index';
-  document.getElementById('v-special').hidden = v !== 'special-projects';
+  document.getElementById('v-special').hidden = v !== 'projects';
+  document.getElementById('v-clients').hidden = v !== 'clients';
   document.getElementById('v-info').hidden = v !== 'information';
   document.body.classList.toggle('on-info', v === 'information');
   fitInfo();
   document.getElementById('t-overview').setAttribute('aria-current', v === 'index');
   document.getElementById('t-info').setAttribute('aria-current', v === 'information');
-  document.getElementById('t-special').setAttribute('aria-current', v === 'special-projects');
+  document.getElementById('t-special').setAttribute('aria-current', v === 'projects');
+  document.getElementById('t-clients').setAttribute('aria-current', v === 'clients');
   if (isOpen()) closeBox();
   highlight(null);
   window.scrollTo(0, 0);
   evenGrid();
   heroRun();
-  document.title = v === 'index' ? 'arena Embroidery' : `${v === 'information' ? 'Information' : 'Special projects'} — arena Embroidery`;
+  document.title = v === 'index' ? 'arena Embroidery' : `${{ information: 'Information', clients: 'Clients', projects: 'Projects' }[v]} — arena Embroidery`;
 }
 addEventListener('hashchange', route);
 route();
