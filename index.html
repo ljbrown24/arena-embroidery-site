@@ -148,6 +148,15 @@ header a:hover { color: var(--fg); }
 .copyline button { color: var(--muted); }
 .copyline button:hover { color: var(--thread); }
 
+/* information page on desktop: fit the whole page in one screen, no scrolling */
+@media (min-width: 900px) {
+  body.on-info .credit { padding-block: 10px; }
+  body.on-info .info { height: max(var(--info-h, 0px), 240px); padding-block: 16px; grid-template-rows: auto 1fr; row-gap: 24px; }
+  body.on-info .info .hero { grid-row: 1 / 3; aspect-ratio: auto; height: 100%; align-self: stretch; }
+  body.on-info .info .c3 { grid-column: 1 / 7; align-self: end; display: grid; grid-auto-flow: column; grid-template-rows: auto auto; justify-content: start; column-gap: clamp(24px, 3.5vw, 56px); }
+  body.on-info .info .c3 ul { margin-bottom: 0; }
+}
+
 @media (max-width: 760px) {
   :root { --tile-w: 160px; --tile-h: 200px; }
 
@@ -348,6 +357,11 @@ new MutationObserver(paintMode).observe(root, { attributes: true, attributeFilte
 paintMode();
 
 const mast = document.getElementById('masthead');
+function fitInfo() {
+  const used = mast.getBoundingClientRect().height + document.querySelector('header').offsetHeight + document.querySelector('.credit').offsetHeight;
+  root.style.setProperty('--info-h', Math.floor(innerHeight - used) + 'px');
+}
+addEventListener('resize', fitInfo);
 new IntersectionObserver(([en]) => document.body.classList.toggle('collapsed', !en.isIntersecting), { rootMargin: `-${85}px 0px 0px 0px` }).observe(mast);
 
 const cur = document.getElementById('cur'), lab = cur.querySelector('.lab');
@@ -407,6 +421,8 @@ function route() {
   document.getElementById('v-index').hidden = v !== 'index';
   document.getElementById('v-slides').hidden = v !== 'slides';
   document.getElementById('v-info').hidden = v !== 'information';
+  document.body.classList.toggle('on-info', v === 'information');
+  fitInfo();
   document.getElementById('t-overview').setAttribute('aria-current', v === 'index');
   document.getElementById('t-slides').setAttribute('aria-current', v === 'slides');
   document.getElementById('t-info').setAttribute('aria-current', v === 'information');
