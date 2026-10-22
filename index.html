@@ -190,6 +190,8 @@ body.on-info .masthead { display: none; }
   .box .meta .about { grid-column: 1 / -1; justify-self: start; text-align: left; }
   .info .hero, .info .lede, .info .c3 { grid-column: 1 / -1; }
   .info h2 { margin-bottom: 0; }
+  /* legacy web-site / shopping lines: tighter tracking, never wrap */
+  .info .lede .fit { white-space: nowrap; letter-spacing: -.04em; font-size: min(1em, calc((100vw - 32px) / 19.8)); }
 }
 @media (max-width: 380px) { :root { --tile-w: 100%; --tile-h: 360px; } }
 #intro { position: fixed; inset: 0; z-index: 200; background: #000; transition: opacity .5s ease; text-transform: none; letter-spacing: 0; }
@@ -273,8 +275,8 @@ body.on-info .masthead { display: none; }
       <figure class="hero" id="hero" aria-label="arena Embroidery work, cycling"><img class="on" src="photos/phila-1.jpg" alt="arena Embroidery work"><img alt="" aria-hidden="true"></figure>
       <p class="lede">Los Angeles : studio, est. 2025<br>
         New York City : shop, est. 2018<br>
-        legacy web-site : <a class="legacy" href="https://arena-embroidery.nyc/" target="_blank" rel="noopener">https://arena-embroidery.nyc/</a><br>
-        shopping : <a class="legacy" href="https://arena-embroidery.myshopify.com/" target="_blank" rel="noopener">https://arena.shopping.buying.stuff/</a></p>
+        <span class="fit">legacy web-site : <a class="legacy" href="https://arena-embroidery.nyc/" target="_blank" rel="noopener">https://arena-embroidery.nyc/</a></span><br>
+        <span class="fit">shopping : <a class="legacy" href="https://arena-embroidery.myshopify.com/" target="_blank" rel="noopener">https://arena.shopping.buying.stuff/</a></span></p>
       <div class="col c3">
         <h2>Studio</h2>
         <ul><li><a href="https://www.google.com/maps/search/?api=1&amp;query=311+Avery+Street+Los+Angeles+CA" target="_blank" rel="noopener">311 Avery Street<br>Los Angeles, CA ↗</a></li></ul>
