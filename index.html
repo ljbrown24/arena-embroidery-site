@@ -89,6 +89,7 @@ header .brand .rep { display: inline-flex; flex: none; }
   header .brand { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; padding-block: 0; line-height: .98; }
 }
 header .navrow {
+  width: var(--grid-w, 100%); justify-self: center;
   display: flex; align-items: center; justify-content: space-between; gap: 1em;
   padding-block: .3em .45em;
   font-size: clamp(14px, 3.4vw, 40px); line-height: 1; white-space: nowrap;
@@ -412,6 +413,17 @@ mDark.addEventListener('click', () => setMode('dark'));
 sysDark.addEventListener && sysDark.addEventListener('change', paintMode);
 new MutationObserver(paintMode).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 paintMode();
+
+// line the menu up with the edges of the photo grid
+function alignNav() {
+  const W = document.querySelector('header').clientWidth;
+  const tw = getComputedStyle(root).getPropertyValue('--tile-w').trim();
+  let w = W;
+  if (tw.endsWith('px')) { const t = parseFloat(tw), g = 5, n = Math.max(1, Math.floor((W + g) / (t + g))); w = Math.min(W, n * t + (n - 1) * g); }
+  root.style.setProperty('--grid-w', w + 'px');
+}
+alignNav();
+addEventListener('resize', alignNav);
 
 const mast = document.getElementById('masthead');
 function fitInfo() {
