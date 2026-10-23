@@ -144,6 +144,10 @@ header a:hover { color: var(--fg); }
 .box .count { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); right: clamp(16px, 2.4vw, 32px); font-variant-numeric: tabular-nums; }
 
 .special { min-height: 50vh; padding-block: 24px 96px; }
+/* clients page: the full client list in flowing columns */
+.clients h2 { font-size: var(--ui); font-weight: 400; color: var(--muted); margin: 0 0 18px; }
+.clients ul { list-style: none; padding: 0; margin: 0; columns: 4 200px; column-gap: clamp(16px, 2.4vw, 32px); font-size: clamp(13px, 1.15vw, 17px); line-height: 1.55; }
+.clients li { break-inside: avoid; padding-left: 1em; text-indent: -1em; }
 .info {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 48px clamp(16px, 2.4vw, 32px);
@@ -279,7 +283,390 @@ body.on-info .masthead { display: none; }
 
 <main>
   <section id="v-index"><div class="grid" id="grid"></div></section>
-  <section id="v-clients" hidden><div class="special" id="clients"></div></section>
+  <section id="v-clients" hidden>
+    <div class="special clients" id="clients">
+      <h2>Clients <span class="count">(377)</span></h2>
+      <ul>
+        <li>01706</li>
+        <li>1-Way Market</li>
+        <li>3 6 Mafia</li>
+        <li>44th &amp; 3rd Bookseller</li>
+        <li>54 Ultra</li>
+        <li>710 Labs</li>
+        <li>8it NY</li>
+        <li>9DEON</li>
+        <li>A1</li>
+        <li>A24</li>
+        <li>Aaron Young</li>
+        <li>Academy Records</li>
+        <li>Adobe</li>
+        <li>Adsum</li>
+        <li>After Hours</li>
+        <li>Airplanemode</li>
+        <li>Alex Ito</li>
+        <li>All My Hats Are Dead Corp.</li>
+        <li>Alltimers</li>
+        <li>Alyk</li>
+        <li>AM.PM</li>
+        <li>American Waste</li>
+        <li>Amiri</li>
+        <li>AR Merch LLC</li>
+        <li>ARC'TERYX</li>
+        <li>Arcana Viscera</li>
+        <li>Are.na</li>
+        <li>AVD - Apolonia Virtual Desk</li>
+        <li>Awake</li>
+        <li>Bandulu</li>
+        <li>Better Daze</li>
+        <li>Betterworld</li>
+        <li>Beverages</li>
+        <li>Big Ant</li>
+        <li>Big Willie</li>
+        <li>Binance</li>
+        <li>Black Sheep</li>
+        <li>Blackbird</li>
+        <li>Blacksmith</li>
+        <li>Blue Couch</li>
+        <li>Blue in Green SoHo</li>
+        <li>Blue~Sun</li>
+        <li>Body Language</li>
+        <li>Bookworks</li>
+        <li>Boredom</li>
+        <li>Born Hurt</li>
+        <li>Born X Raised</li>
+        <li>Borna Sammak</li>
+        <li>Bottega Fleneur</li>
+        <li>Boyharsher</li>
+        <li>Brasi</li>
+        <li>Bravest</li>
+        <li>Brooklyn Coachworks</li>
+        <li>Brooklyn Magazine</li>
+        <li>Brooks Brothers</li>
+        <li>Bug Sex</li>
+        <li>Bullish</li>
+        <li>Bun Dutch</li>
+        <li>Burn &amp; Broad</li>
+        <li>Byline</li>
+        <li>Cafe Forgot</li>
+        <li>Cafe Spaghetti</li>
+        <li>Calvin Klein</li>
+        <li>CARA - Center for Art, Research and Alliances</li>
+        <li>Carbone</li>
+        <li>Carhartt WIP</li>
+        <li>Caritas Construction</li>
+        <li>Cartel &amp; Co.</li>
+        <li>Chateau 7</li>
+        <li>Chez Rien</li>
+        <li>Chickadee</li>
+        <li>Child Went Forth</li>
+        <li>Chinatown Market</li>
+        <li>Chino Grande</li>
+        <li>Cliff Creative Projects</li>
+        <li>Climatebase</li>
+        <li>Clockwork Jiu-Jitsu</li>
+        <li>Club Night Club</li>
+        <li>Coat of Arms</li>
+        <li>CoCA</li>
+        <li>Coca-Cola</li>
+        <li>Comma</li>
+        <li>Cookies Hoops</li>
+        <li>Crawford Industries</li>
+        <li>Csillag</li>
+        <li>Cult &amp; Rain</li>
+        <li>D'Emploi</li>
+        <li>Dance Data Records</li>
+        <li>Dance Lawyer</li>
+        <li>Dancefloor FC</li>
+        <li>Dave's New York</li>
+        <li>David Zwirner</li>
+        <li>Deer Dana</li>
+        <li>Diesel</li>
+        <li>Dior</li>
+        <li>Discwoman</li>
+        <li>Dossr</li>
+        <li>Dr. Martens</li>
+        <li>Drawing Room</li>
+        <li>Dream Crew</li>
+        <li>Dripping</li>
+        <li>DSM - Dover Street Market</li>
+        <li>Dunes</li>
+        <li>Dweller</li>
+        <li>Earthboys</li>
+        <li>Eartheater</li>
+        <li>Easy Does It</li>
+        <li>Ella Funt</li>
+        <li>En Plein Air</li>
+        <li>Ensenada</li>
+        <li>Equinox Hotels</li>
+        <li>Eric Wrenn</li>
+        <li>Evermore</li>
+        <li>Everyday Mountaineering</li>
+        <li>Everyone Pays</li>
+        <li>Extra Vitamins</li>
+        <li>Family Office</li>
+        <li>Fanatics</li>
+        <li>FDNY - Fire Department of New York</li>
+        <li>Fetch Pet</li>
+        <li>Field Mag</li>
+        <li>Final Warning</li>
+        <li>Fini Pizza</li>
+        <li>First We Feast</li>
+        <li>Fish Census</li>
+        <li>Flowerworld</li>
+        <li>Fly Fish</li>
+        <li>Fly Nowhere</li>
+        <li>FOOD</li>
+        <li>FORIS Outdoors</li>
+        <li>Fortune World</li>
+        <li>Found Objects</li>
+        <li>Friend Edition</li>
+        <li>Funhouse</li>
+        <li>Future Prophet</li>
+        <li>Gang Corp</li>
+        <li>Garden Carver</li>
+        <li>Gary V.</li>
+        <li>Ghostly</li>
+        <li>GKC - Gia Kuan Consulting</li>
+        <li>Google</li>
+        <li>H. Moser &amp; Cie</li>
+        <li>HBA - Hood By Air</li>
+        <li>Hennerton UK</li>
+        <li>Heron Preston</li>
+        <li>Hinge</li>
+        <li>Hirshleifer's</li>
+        <li>Holy Water</li>
+        <li>Homerun</li>
+        <li>Honey Dijon</li>
+        <li>Honey's</li>
+        <li>Hôtels Amour (Paris)</li>
+        <li>I Am Music</li>
+        <li>i-D Magazine</li>
+        <li>I.AM.GIA</li>
+        <li>Intrepid</li>
+        <li>Invisible North</li>
+        <li>io</li>
+        <li>J Balvin</li>
+        <li>Jenkem</li>
+        <li>King Kog</li>
+        <li>Kith</li>
+        <li>L.I.E.S. - Long Island Electrical Systems</li>
+        <li>Lanning-Smith</li>
+        <li>LASPAPIYONS</li>
+        <li>Launderette</li>
+        <li>Le Labo</li>
+        <li>Left Bank Books</li>
+        <li>Leisure Center</li>
+        <li>Leisure!</li>
+        <li>Leluxe</li>
+        <li>Lichen</li>
+        <li>Liquid Sky</li>
+        <li>Lite Year</li>
+        <li>Lopez</li>
+        <li>Lorin Brown</li>
+        <li>LPH - Lets Play House</li>
+        <li>LQQK Studio</li>
+        <li>Lucia Pizza</li>
+        <li>Lululemon</li>
+        <li>Luna Luna</li>
+        <li>MAC Energy</li>
+        <li>Macro Sea</li>
+        <li>Mademe</li>
+        <li>Madhappy</li>
+        <li>Magenta Light</li>
+        <li>Maison Kitsune</li>
+        <li>Massey Klein</li>
+        <li>Matte Projects</li>
+        <li>Mental Athletic</li>
+        <li>Meseroll</li>
+        <li>Metropolis Vintage</li>
+        <li>Microsoft</li>
+        <li>Million Goods</li>
+        <li>Mission Chinese</li>
+        <li>Mister Sunday</li>
+        <li>Mr. Porter</li>
+        <li>NADA - New Art Dealers Alliance</li>
+        <li>Najee Brown</li>
+        <li>Nanga Adsum</li>
+        <li>Naps</li>
+        <li>Netflix</li>
+        <li>Neutral Cloud</li>
+        <li>Nevermind</li>
+        <li>New Inc</li>
+        <li>New Museum</li>
+        <li>New York Times</li>
+        <li>New Yorker</li>
+        <li>Newlab</li>
+        <li>Nicolo</li>
+        <li>Nike</li>
+        <li>Noah NY</li>
+        <li>Nobody Knows Studio</li>
+        <li>Nocta</li>
+        <li>Nod Pod</li>
+        <li>Nolita Dirtbag</li>
+        <li>November</li>
+        <li>Nowadays</li>
+        <li>NY Sunshine</li>
+        <li>Observed</li>
+        <li>ONE37</li>
+        <li>Outi5000</li>
+        <li>Packer Shoes</li>
+        <li>Parlux Fragrances</li>
+        <li>Party DAO</li>
+        <li>Past Life</li>
+        <li>Pasty Man</li>
+        <li>Paul Smith</li>
+        <li>Peels</li>
+        <li>Penny Projects</li>
+        <li>pgLang</li>
+        <li>Philadelphia 76ers</li>
+        <li>Physical Therapy</li>
+        <li>Piaule</li>
+        <li>Pilgrim Surf</li>
+        <li>Pillow Cat Books</li>
+        <li>Plastic Hollywood</li>
+        <li>Playboi Carti</li>
+        <li>Pokito</li>
+        <li>Pootsle</li>
+        <li>Porch</li>
+        <li>Post Company</li>
+        <li>Primitives</li>
+        <li>Prophet Strategy Consulting</li>
+        <li>PTZ Optics</li>
+        <li>Public Assistants</li>
+        <li>Public Records</li>
+        <li>Puma</li>
+        <li>Radio City</li>
+        <li>Ray's Bar</li>
+        <li>Red Bull</li>
+        <li>Refined Qualities</li>
+        <li>Relax Lacrosse</li>
+        <li>Restaurant Angel</li>
+        <li>Rhee</li>
+        <li>Richardson Magazine</li>
+        <li>RIP Barneys</li>
+        <li>Roberta's Pizza</li>
+        <li>Roscoe Motel</li>
+        <li>Rude Mouth</li>
+        <li>Saker</li>
+        <li>Salt's Cure</li>
+        <li>SAMEOLD</li>
+        <li>Saturday Cartoons</li>
+        <li>Save Mankind</li>
+        <li>Second City</li>
+        <li>Secret Coffee</li>
+        <li>See Saw</li>
+        <li>Selling Skylines</li>
+        <li>Sette Bello</li>
+        <li>Shake Shack</li>
+        <li>Shall We?</li>
+        <li>Shapes NYC</li>
+        <li>Siegelman Stable</li>
+        <li>Silver Digital</li>
+        <li>SITU</li>
+        <li>Sky High Farm</li>
+        <li>Smith &amp; Wesson</li>
+        <li>Smood</li>
+        <li>Snarkitecture</li>
+        <li>Snoeman</li>
+        <li>SNS Radio</li>
+        <li>So Far So Good</li>
+        <li>Social Country Club</li>
+        <li>Sofie Pavitt</li>
+        <li>SOHOboyz</li>
+        <li>Sonos</li>
+        <li>Soothsayer</li>
+        <li>Spears</li>
+        <li>Speedy Bar</li>
+        <li>Spoiler Room</li>
+        <li>Starbucks</li>
+        <li>Starday</li>
+        <li>Stay Silent</li>
+        <li>Steam Room</li>
+        <li>Sterling Silver</li>
+        <li>StillKelly</li>
+        <li>STP - Serving The People</li>
+        <li>Strand Books</li>
+        <li>Stray Rats</li>
+        <li>Strike Zone</li>
+        <li>Studio H</li>
+        <li>Suede.ops</li>
+        <li>Sukeban</li>
+        <li>Sun Gold Ice Pops</li>
+        <li>Sunflower</li>
+        <li>Supreme</li>
+        <li>SVA - School of Visual Art</li>
+        <li>Swoonys</li>
+        <li>systemarosa</li>
+        <li>Taco Bell</li>
+        <li>Tailored NYC</li>
+        <li>Take-Out Shop</li>
+        <li>Taller de Rafa</li>
+        <li>Tapestry</li>
+        <li>Tartan</li>
+        <li>Ted Wells</li>
+        <li>Tennr</li>
+        <li>The Courts</li>
+        <li>The Odeon</li>
+        <li>Thermal</li>
+        <li>Think</li>
+        <li>Thirteen Studios</li>
+        <li>TMB - The Millennial Broker</li>
+        <li>Tom Sachs</li>
+        <li>Tony Valentine</li>
+        <li>Topanga HiFi</li>
+        <li>Topo Chico</li>
+        <li>Toyota Motor</li>
+        <li>Toñita's</li>
+        <li>Traits &amp; Algos</li>
+        <li>Tranquil Forrest</li>
+        <li>Twiggy Moore</li>
+        <li>Twist</li>
+        <li>Two Seven Varsity</li>
+        <li>UBS Arena</li>
+        <li>Umbrae</li>
+        <li>Uniqlo</li>
+        <li>Unsubscribe LLC</li>
+        <li>UPS - United Parcel Service</li>
+        <li>Upside Pizza</li>
+        <li>US Open</li>
+        <li>Usona</li>
+        <li>USPS - United States Postal Service</li>
+        <li>Van Zee</li>
+        <li>Vayner Media</li>
+        <li>VeeFriends</li>
+        <li>Velluto Verde</li>
+        <li>Very Special</li>
+        <li>Vicarious Love</li>
+        <li>Viking Dog</li>
+        <li>Village Psychic</li>
+        <li>Vintage Sponsor</li>
+        <li>Violent Noise</li>
+        <li>Violet</li>
+        <li>Visla Magazine</li>
+        <li>Vital Vision</li>
+        <li>W+K - Wieden+Kennedy</li>
+        <li>Waialae</li>
+        <li>Walter Masterson</li>
+        <li>Wave Hello Studio</li>
+        <li>Wax the Curb</li>
+        <li>Waz Dope</li>
+        <li>Western Medicine</li>
+        <li>Whim Golf</li>
+        <li>White &amp; Warren</li>
+        <li>Will Gildersleeve</li>
+        <li>Win Son</li>
+        <li>Wire</li>
+        <li>Wishing Well</li>
+        <li>Worldwide Staff</li>
+        <li>XVI - Lil' Uzi</li>
+        <li>Y,IWO</li>
+        <li>Yamaka</li>
+        <li>Yellow Rose NYC</li>
+        <li>Yonkers</li>
+        <li>YOWIE</li>
+      </ul>
+    </div>
+  </section>
   <section id="v-special" hidden><div class="special" id="special"></div></section>
   <section id="v-info" hidden>
     <div class="info">
