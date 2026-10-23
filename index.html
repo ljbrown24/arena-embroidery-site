@@ -91,8 +91,11 @@ body.on-info { padding-top: var(--brand-h, var(--bar)); }
 .brand .ch { display: inline-block; transform: translateY(var(--y)) rotate(var(--r)) skewX(-8deg); }
 .brand .sp { display: inline-block; width: .28em; }
 .brand .rep { display: inline-flex; flex: none; }
+.brand .rep:nth-child(n+4) { display: none; }
 @media (max-width: 640px) {
-  .brand { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; line-height: .98; }
+  /* phones: two columns of three jumbled repeats */
+  .brand { display: grid; grid-template-columns: repeat(2, max-content); grid-template-rows: repeat(3, auto); grid-auto-flow: column; justify-content: space-between; align-content: center; column-gap: 12px; row-gap: 0; line-height: .98; }
+  .brand .rep:nth-child(n+4) { display: inline-flex; }
 }
 header .navrow {
   display: flex; align-items: center; justify-content: space-between; gap: 1em;
@@ -392,7 +395,7 @@ addEventListener('keydown', e => {
 
 (() => {
   const b = document.getElementById('brand'), t = b.textContent; b.textContent = '';
-  for (let k = 0; k < 3; k++) {
+  for (let k = 0; k < 6; k++) {
   const g = document.createElement('span'); g.className = 'rep'; g.setAttribute('aria-hidden', 'true');
   const R = [-9, 6, -4, 10, -7, 0, 5, -10, 8, -3, 7, -6, 3, -8, 9, -5];
   const Y = [2, -3, 1, -1, 3, 0, -2, 3, -3, 1, 2, -2, 0, 3, -1, 2];
@@ -411,13 +414,15 @@ const brandEl = document.getElementById('brand');
 function fitBrand() {
   const base = 40;
   brandEl.style.fontSize = base + 'px';
-  const reps = [...brandEl.querySelectorAll('.rep')];
+  const reps = [...brandEl.querySelectorAll('.rep')].filter(r => r.getClientRects().length);
   const bcs = getComputedStyle(brandEl), avail = brandEl.clientWidth - parseFloat(bcs.paddingLeft) - parseFloat(bcs.paddingRight);
-  const stacked = getComputedStyle(brandEl).flexDirection === 'column';
+  const stacked = bcs.display === 'grid';
   let size;
   if (stacked) {
+    // two columns of three: each column gets half the width, minus the gap
     const widest = Math.max(...reps.map(r => r.getBoundingClientRect().width));
-    size = Math.min(base * avail / widest * .97, (85 - 12) / 3 / 1.02);
+    const colW = (avail - (parseFloat(bcs.columnGap) || 0)) / 2;
+    size = Math.min(base * colW / widest * .97, (85 - 12) / 3 / 1.02);
   } else {
     // large, filling the width so the three repeats nearly touch
     const need = reps.reduce((a, r) => a + r.getBoundingClientRect().width, 0) + base * .12 * (reps.length - 1);
