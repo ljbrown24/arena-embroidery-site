@@ -261,7 +261,7 @@ body.on-info .masthead { display: none; }
 <a class="brand" href="#gallery" aria-label="arena embroidery, gallery" id="brand">arena embroidery</a>
 <header>
   <div class="navrow">
-  <div class="right"><a href="#information" id="t-info">information</a></div>
+  <div class="right"><a href="#information" id="t-info">info / bio</a></div>
   <nav class="toggle" aria-label="View">
     <a href="#gallery" id="t-overview">gallery</a>
   </nav>
@@ -535,7 +535,7 @@ function route() {
   window.scrollTo(0, 0);
   evenGrid();
   heroRun();
-  document.title = v === 'index' ? 'arena Embroidery' : `${{ information: 'Information', clients: 'Clients', projects: 'Projects' }[v]} — arena Embroidery`;
+  document.title = v === 'index' ? 'arena Embroidery' : `${{ information: 'Info / bio', clients: 'Clients', projects: 'Projects' }[v]} — arena Embroidery`;
 }
 addEventListener('hashchange', route);
 route();
