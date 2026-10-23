@@ -156,9 +156,9 @@ header a:hover { color: var(--fg); }
 .info .col { min-width: 0; }
 .info .c3 { grid-column: 1 / 5; }
 /* bio: sized between the city lines and the link lines */
-.info .bio { grid-column: 1 / 7; margin: 0; font-size: clamp(16px, 1.65vw, 27px); line-height: 1.3; letter-spacing: .005em; max-width: 34em; text-wrap: pretty; }
+.info .bio { grid-column: 1 / 7; margin: 0; font-size: clamp(16px, min(1.65vw, 2.9vh), 27px); line-height: 1.3; letter-spacing: .005em; max-width: 34em; text-wrap: pretty; }
 /* legacy web-site / shopping: small, sitting just above the locations */
-.info .weblinks { grid-column: 1 / 7; margin: 0; overflow: hidden; font-size: clamp(12px, 1.2vw, 20px); line-height: 1.35; letter-spacing: .01em; }
+.info .weblinks { grid-column: 1 / 7; margin: 0; font-size: clamp(12px, 1.2vw, 20px); line-height: 1.35; letter-spacing: .01em; }
 .info .weblinks .sq { white-space: nowrap; }
 .info h2 { font-size: var(--ui); font-weight: 400; color: var(--muted); margin: 0 0 12px; }
 .info p { text-transform: none; letter-spacing: .005em; font-size: 15px; line-height: 1.6; margin: 0 0 14px; max-width: 58ch; }
@@ -185,7 +185,7 @@ body.on-info .masthead { display: none; }
 /* information page on desktop: fit the whole page in one screen, no scrolling */
 @media (min-width: 900px) {
   body.on-info .credit { padding-block: 10px; }
-  body.on-info .info { height: max(var(--info-h, 0px), 240px); padding-block: 16px; grid-template-rows: auto auto 1fr auto auto; row-gap: 20px; }
+  body.on-info .info { height: max(var(--info-h, 0px), 240px); padding-block: 16px; grid-template-rows: auto auto 1fr auto auto; row-gap: clamp(12px, 2vh, 20px); }
   body.on-info .info .hero { grid-row: 1 / 6; aspect-ratio: auto; height: 100%; align-self: stretch; }
   body.on-info .info .bio { grid-row: 2; }
   body.on-info .info .weblinks { grid-row: 4; }
@@ -286,7 +286,7 @@ body.on-info .masthead { display: none; }
       <figure class="hero" id="hero" aria-label="arena Embroidery work, cycling"><img class="on" src="photos/phila-1.jpg" alt="arena Embroidery work"><img alt="" aria-hidden="true"></figure>
       <p class="lede">Los Angeles : studio, est. 2025<br>
         New York City : shop, est. 2018</p>
-      <p class="bio">arena Embroidery, Inc. is a specialty embellishment company with locations in New York City and Los Angeles. Founded in 2018, we service the fashion industry, as well as others like fine art and robotics.</p>
+      <p class="bio">arena Embroidery, Inc. is a specialty embellishment company with locations in New York City and Los Angeles. Founded in 2018, we service the fashion industry, as well as others like fine art and robotics. We specialize in sampling and prototyping using advanced embroidery applications, but no job is too big and no task is too small. No matter where a client is in development, we are willing to join you and your team in the process of getting a project to the finish line.</p>
       <p class="weblinks"><span class="sq">legacy web-site : <a class="legacy" href="https://arena-embroidery.nyc/" target="_blank" rel="noopener">https://arena-embroidery.nyc/</a></span><br>
         <span class="sq">shopping : <a class="legacy" href="https://arena-embroidery.myshopify.com/" target="_blank" rel="noopener">https://arena.shopping.buying.stuff/</a></span></p>
       <div class="col c3">
