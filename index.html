@@ -62,12 +62,17 @@ body.locked { overflow: hidden; }
 }
 #cur { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; transform: translate(-50%, -50%); opacity: 0; transition: opacity .15s; }
 body.cc #cur { opacity: 1; }
-#cur .dot { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--thread); transition: transform .2s ease; }
+#cur .dot { display: block; width: 12px; height: 12px; border-radius: 50%; background: #ff0000; transition: transform .2s ease; }
 #cur .lab { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); white-space: nowrap; color: var(--fg); background: var(--bg); padding: 2px 5px; }
 #cur .lab:empty { display: none; }
 #cur.big .dot { transform: scale(2.2); }
 #cur.small .dot { transform: scale(.6); }
 #cur.on-dark .lab { color: #f1f0ec; background: #0f0f0e; }
+/* crosshair: full-screen hairlines through the cursor, drawn over everything including the red dot */
+.xh { position: fixed; left: 0; top: 0; z-index: 301; pointer-events: none; background: #fff; mix-blend-mode: difference; opacity: 0; transition: opacity .15s; will-change: transform; }
+.xh-h { width: 100vw; height: 1px; }
+.xh-v { width: 1px; height: 100vh; }
+body.cc .xh { opacity: 1; }
 
 .masthead { display: block; padding-block: clamp(14px, 2vw, 28px) 4px; }
 .masthead img { display: block; width: 100%; height: auto; filter: var(--logo-filter); }
@@ -236,6 +241,7 @@ body.on-info .masthead { display: none; }
 
 
 <div id="cur" aria-hidden="true"><span class="dot"></span><span class="lab"></span></div>
+<div class="xh xh-h" id="xh-h" aria-hidden="true"></div><div class="xh xh-v" id="xh-v" aria-hidden="true"></div>
 
 <div id="intro" hidden role="button" tabindex="0" aria-label="Enter arena Embroidery">
   <div class="cover" id="intro-cover"></div>
@@ -883,7 +889,8 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     if (lab.textContent !== text) lab.textContent = text;
   });
   document.addEventListener('mouseleave', () => document.body.classList.remove('cc'));
-  const loop = () => { x += (tx - x) * (still ? 1 : .35); y += (ty - y) * (still ? 1 : .35); cur.style.left = x + 'px'; cur.style.top = y + 'px'; requestAnimationFrame(loop); };
+  const loop = () => { x += (tx - x) * (still ? 1 : .35); y += (ty - y) * (still ? 1 : .35); cur.style.left = x + 'px'; cur.style.top = y + 'px'; xhH.style.transform = `translateY(${Math.round(y)}px)`; xhV.style.transform = `translateX(${Math.round(x)}px)`; requestAnimationFrame(loop); };
+  const xhH = document.getElementById('xh-h'), xhV = document.getElementById('xh-v');
   loop();
 }
 
