@@ -63,7 +63,7 @@ body.locked { overflow: hidden; }
 #cur { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; transform: translate(-50%, -50%); opacity: 0; transition: opacity .15s; }
 body.cc #cur { opacity: 1; }
 #cur .dot { display: block; width: 12px; height: 12px; border-radius: 50%; background: #ff0000; transition: transform .2s ease; }
-#cur .lab { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); white-space: nowrap; color: var(--fg); background: var(--bg); padding: 2px 5px; }
+#cur .lab { position: absolute; left: calc(50% + 16px); bottom: calc(50% + 16px); white-space: nowrap; /* NE of the dot, on the 45° diagonal, clear of the crosshair */ color: var(--fg); background: var(--bg); padding: 2px 5px; }
 #cur .lab:empty { display: none; }
 #cur.big .dot { transform: scale(2.2); }
 #cur.small .dot { transform: scale(.6); }
