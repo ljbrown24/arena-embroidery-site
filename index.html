@@ -62,11 +62,11 @@ body.locked { overflow: hidden; }
 }
 #cur { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; transform: translate(-50%, -50%); opacity: 0; transition: opacity .15s; }
 body.cc #cur { opacity: 1; }
-#cur .dot { display: block; width: 12px; height: 12px; border-radius: 50%; background: #ff0000; transition: transform .2s ease; }
+#cur .dot { display: block; width: 12px; height: 12px; border-radius: 50%; background: #ff0000; transform: scale(calc(var(--s, .6) * var(--k, 1))); transition: transform .08s linear; }
 #cur .lab { position: absolute; left: calc(50% + 16px); bottom: calc(50% + 16px); white-space: nowrap; /* NE of the dot, on the 45° diagonal, clear of the crosshair */ color: var(--fg); background: var(--bg); padding: 2px 5px; }
 #cur .lab:empty { display: none; }
-#cur.big .dot { transform: scale(2.2); }
-#cur.small .dot { transform: scale(.6); }
+#cur.big .dot { --k: 2.2; }
+#cur.small .dot { --k: .6; }
 #cur.on-dark .lab { color: #f1f0ec; background: #0f0f0e; }
 /* crosshair: full-screen hairlines through the cursor, drawn over everything including the red dot */
 .xh { position: fixed; left: 0; top: 0; z-index: 301; pointer-events: none; background: #fff; mix-blend-mode: difference; opacity: 0; transition: opacity .15s; will-change: transform; }
@@ -889,7 +889,13 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     if (lab.textContent !== text) lab.textContent = text;
   });
   document.addEventListener('mouseleave', () => document.body.classList.remove('cc'));
-  const loop = () => { x += (tx - x) * (still ? 1 : .35); y += (ty - y) * (still ? 1 : .35); cur.style.left = x + 'px'; cur.style.top = y + 'px'; xhH.style.transform = `translateY(${Math.round(y)}px)`; xhV.style.transform = `translateX(${Math.round(x)}px)`; requestAnimationFrame(loop); };
+  // dot size follows cursor speed: smallest when still, larger the faster it moves
+  const dot = cur.querySelector('.dot'); let px = 0, py = 0, vel = 0;
+  const loop = () => {
+    const d = Math.hypot(tx - px, ty - py); px = tx; py = ty;
+    vel += (Math.min(d, 60) - vel) * .15;
+    dot.style.setProperty('--s', (.6 + vel / 25).toFixed(3));
+    x += (tx - x) * (still ? 1 : .35); y += (ty - y) * (still ? 1 : .35); cur.style.left = x + 'px'; cur.style.top = y + 'px'; xhH.style.transform = `translateY(${Math.round(y)}px)`; xhV.style.transform = `translateX(${Math.round(x)}px)`; requestAnimationFrame(loop); };
   const xhH = document.getElementById('xh-h'), xhV = document.getElementById('xh-v');
   loop();
 }
