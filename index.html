@@ -151,6 +151,7 @@ header a:hover { color: var(--fg); }
 
 .special { min-height: 50vh; padding-block: 24px 96px; }
 /* clients page: the full client list in flowing columns */
+body.on-clients header .navrow { padding-bottom: .8em; }  /* breathing room between the menu and the list, also while scrolling */
 .clients ul { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 5px; font-size: clamp(13px, 1.15vw, 17px); line-height: 1.55; }
 @media (min-width: 640px) { .clients ul { columns: 6; } }  /* six columns, lined up with the gallery and menu */
 .clients li { break-inside: avoid; padding-left: 1em; text-indent: -1em; padding-right: .5em; }
@@ -995,6 +996,7 @@ function route() {
   document.getElementById('v-clients').hidden = v !== 'clients';
   document.getElementById('v-info').hidden = v !== 'information';
   document.body.classList.toggle('on-info', v === 'information');
+  document.body.classList.toggle('on-clients', v === 'clients');
   fitInfo();
   document.getElementById('t-overview').setAttribute('aria-current', v === 'index');
   document.getElementById('t-info').setAttribute('aria-current', v === 'information');
