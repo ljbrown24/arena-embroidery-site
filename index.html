@@ -158,6 +158,11 @@ body.on-clients header .navrow { padding-bottom: .8em; }  /* breathing room betw
 /* acronym entries: the spelled-out name after the acronym is set very small so it stays on one line */
 .clients li.acr { white-space: nowrap; overflow: hidden; }
 .clients li.acr .full { font-size: .55em; letter-spacing: .01em; }
+/* clients page: logo wall above the full list — six across like the list, three on phones */
+.clients ul.logos { columns: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 1.6vw, 24px) 5px; margin: 0 0 clamp(40px, 6vw, 96px); }
+@media (min-width: 640px) { .clients ul.logos { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.clients ul.logos li { padding: 0; text-indent: 0; }
+.clients ul.logos img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; filter: var(--logo-filter, none); }
 .info {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 48px clamp(16px, 2.4vw, 32px);
@@ -297,6 +302,106 @@ body.on-info .masthead { display: none; }
   <section id="v-index"><div class="grid" id="grid"></div></section>
   <section id="v-clients" hidden>
     <div class="special clients" id="clients">
+      <ul class="logos" aria-label="Selected clients">
+        <li><img src="logos/a24.png" alt="A24" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/adidas.png" alt="adidas" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/adobe.png" alt="Adobe" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/amiri.png" alt="Amiri" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/apartamento-magazine.png" alt="Apartamento Magazine" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/arc-teryx.png" alt="ARC&#x27;TERYX" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/are-na.png" alt="Are.na" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/asics.png" alt="ASICS" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/awake.png" alt="Awake" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/beats-by-dre.png" alt="Beats by Dre" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/binance.png" alt="Binance" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/born-x-raised.png" alt="Born X Raised" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/brooks-brothers.png" alt="Brooks Brothers" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/bumble.png" alt="Bumble" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/calvin-klein.png" alt="Calvin Klein" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/carhartt-wip.png" alt="Carhartt WIP" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/coca-cola.png" alt="Coca-Cola" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/david-zwirner.png" alt="David Zwirner" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/depop.png" alt="Depop" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/diesel.png" alt="Diesel" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/dior.png" alt="Dior" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/dr-martens.png" alt="Dr. Martens" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/dsm-dover-street-market.png" alt="DSM" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/equinox-hotels.png" alt="Equinox Hotels" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/evisu.png" alt="Evisu" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/fanatics.png" alt="Fanatics" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/fdny-fire-department-of-new-york.png" alt="FDNY" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/fetch-pet.png" alt="Fetch Pet" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/formas.png" alt="FORMAS" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/gagosian.png" alt="Gagosian" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/ghostly.png" alt="Ghostly" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/google.png" alt="Google" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/gx1000.png" alt="GX1000" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/h-moser-cie.png" alt="H. Moser &amp; Cie" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/harrods.png" alt="Harrods" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/hinge.png" alt="Hinge" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/homerun.png" alt="Homerun" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/i-d-magazine.png" alt="i-D Magazine" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/jenkem.png" alt="Jenkem" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/kith.png" alt="Kith" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/knoll.png" alt="Knoll" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/le-labo.png" alt="Le Labo" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/leluxe.png" alt="Leluxe" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/levi-s.png" alt="Levi&#x27;s" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/lululemon.png" alt="Lululemon" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/mac-energy.png" alt="MAC Energy" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/macro-sea.png" alt="Macro Sea" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/mademe.png" alt="MadeMe" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/madhappy.png" alt="Madhappy" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/maison-kitsune.png" alt="Maison Kitsune" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/marc-jacobs.png" alt="Marc Jacobs" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/michael-kors.png" alt="Michael Kors" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/microsoft.png" alt="Microsoft" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/nada-new-art-dealers-alliance.png" alt="NADA" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/netflix.png" alt="Netflix" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/new-balance.png" alt="New Balance" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/new-museum.png" alt="New Museum" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/new-york-times.png" alt="New York Times" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/new-yorker.png" alt="New Yorker" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/newlab.png" alt="Newlab" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/nike.png" alt="Nike" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/noah-ny.png" alt="Noah NY" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/outlier.png" alt="Outlier" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/ovo-october-s-very-own.png" alt="OVO" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/packer-shoes.png" alt="Packer Shoes" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/paul-smith.png" alt="Paul Smith" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/pglang.png" alt="pgLang" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/philadelphia-76ers.png" alt="Philadelphia 76ers" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/pilgrim-surf.png" alt="Pilgrim Surf" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/prophet-strategy-consulting.png" alt="Prophet Strategy Consulting" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/puma.png" alt="Puma" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/radio-city.png" alt="Radio City" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/red-bull.png" alt="Red Bull" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/rhizome.png" alt="Rhizome" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/roberta-s-pizza.png" alt="Roberta&#x27;s Pizza" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/shake-shack.png" alt="Shake Shack" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/silver-digital.png" alt="Silver Digital" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/smith-wesson.png" alt="Smith &amp; Wesson" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/sonos.png" alt="Sonos" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/starbucks.png" alt="Starbucks" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/stp-serving-the-people.png" alt="STP" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/strand-books.png" alt="Strand Books" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/supreme.png" alt="Supreme" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/sva-school-of-visual-art.png" alt="SVA" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/taco-bell.png" alt="Taco Bell" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/tapestry.png" alt="Tapestry" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/tom-sachs.png" alt="Tom Sachs" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/topo-chico.png" alt="Topo Chico" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/tory-burch.png" alt="Tory Burch" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/toyota-motor.png" alt="Toyota Motor" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/ubs-arena.png" alt="UBS Arena" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/uniqlo.png" alt="Uniqlo" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/ups-united-parcel-service.png" alt="UPS" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/us-open.png" alt="US Open" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/usps-united-states-postal-service.png" alt="USPS" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/vayner-media.png" alt="Vayner Media" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/w-k-wieden-kennedy.png" alt="W+K" loading="lazy" decoding="async" width="600" height="300"></li>
+        <li><img src="logos/yeezy.png" alt="Yeezy" loading="lazy" decoding="async" width="600" height="300"></li>
+      </ul>
       <ul>
         <li>01706</li>
         <li>1-Way Market</li>
